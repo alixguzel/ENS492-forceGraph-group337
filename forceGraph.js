@@ -1,15 +1,5 @@
-// Random tree
-const N = 300;
-const gData = {
-  nodes: [...Array(N).keys()].map(i => ({ id: i })),
-  links: [...Array(N).keys()]
-    .filter(id => id)
-    .map(id => ({
-      source: id,
-      target: Math.round(Math.random() * (id-1))
-    }))
-};
-
 const Graph = ForceGraph3D()
-  (document.getElementById('3d-graph'))
-    .graphData(gData);
+      (document.getElementById('3d-graph'))
+        .jsonUrl('../Data/sampleUnzip.json')
+        .nodeLabel('screen_name')
+        .nodeAutoColorBy('followers_count');
