@@ -8,23 +8,37 @@ const elem = document.getElementById('3d-graph');
 
 var gData = await fetchJson();
 
-function createCard(title, description) {
+function createFloatingBox(title, description) {
+  var floatingBox = document.querySelector('.floating-box-two');
+
+  if (floatingBox) {
+    floatingBox.remove();
+  }
+
   const node = document.createElement("div");
   node.classList.add("card");
+  node.classList.add("floating-box-two");
   node.innerHTML = `
-    <div class="floating-box-two">
       <h3 class="card-title">${title}</h3>
-      "floating-box"
-    </div>
-  `;
+      <p>${description}</p>
+      <button class="close-button">
+  <span>X</span>
+</button>
+    `;
+
   document.body.appendChild(node);
+
+  const closeButton = node.querySelector('.close-button');
+  closeButton.addEventListener('click', function () {
+    node.remove();
+  });
 }
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("id")
   .nodeAutoColorBy("group")
   .graphData(gData)
-  .onNodeClick(node => createCard(node.id, node.description));
+  .onNodeClick(node => createFloatingBox(node.id, node.description));
 
 
 /*if(x == 6){
