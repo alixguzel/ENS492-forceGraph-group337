@@ -8,7 +8,7 @@ var x = 6;
 
 const Graph = ForceGraph3D()(elem)
   .backgroundColor("#000")
-  .jsonUrl('./Data/3000sample.json')
+  .jsonUrl('./Data/Sample/Old/gephiExport.json')
   .nodeAutoColorBy("group")
   .nodeLabel(node => `${node.id}`)
   //.nodeVisibility(node => node.group == 1)
