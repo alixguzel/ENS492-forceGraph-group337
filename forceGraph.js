@@ -1,55 +1,61 @@
-//const {dat} = require('dat.gui');
-const gui = new dat.GUI();
+async function fetchJson() {
+  let response = await fetch('./Data/Sample/Old/data.json');
+  let data = await response.json();
+  return data;
+}
+
 const elem = document.getElementById('3d-graph');
-var x = 6;
-//var gData = JSON.parse(fs.readFileSync('./data.json'));
+
+var gData = await fetchJson();
 
 
-
-const Graph = ForceGraph3D()(elem)
-  .backgroundColor("#000")
-  .jsonUrl('./Data/Sample/Old/gephiExport.json')
-  .nodeAutoColorBy("group")
-  .nodeLabel(node => `${node.id}`)
-  //.nodeVisibility(node => node.group == 1)
-  .linkVisibility()
-
+const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
+.nodeLabel("id")
+.nodeAutoColorBy("group")
+.graphData(gData)
+.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
 /*if(x == 6){
-  Graph.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
+Graph.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
 }
 else{
-  Graph.nodeVisibility(node => node.group == 1);
+Graph.nodeVisibility(node => node.group == 1);
 }*/
 
 
-var parameters = {
-filter: 0
-};
-filterGroup = gui
-.add(parameters, "filter")
-.min(0)
-.max(2)
-.step(1)
-.name("Filter group")
-.listen();
 
-filterGroup.onFinishChange((newValue) => {
-// console.log(gData);
-const filteredNodes = gData.nodes.filter((n) => n.group == newValue);
-// console.log(filteredNodes);
-const filteredNodesIds = [];
-JSON.stringify(filteredNodes, (key, value) => {
-if (key === "id") filteredNodesIds.push(value);
-return value;
-});
-// console.log(filteredNodesIds);
-const filteredLinks = gData.links.filter(
-(e) =>
-  filteredNodesIds.includes(e.source.id) &
+function filterNodes(inputval){
+
+  var filter_num  = parseInt(inputval);
+  const filteredNodes = gData.nodes.filter((n) => n.group == filter_num);
+  console.log(filteredNodes);
+  const filteredNodesIds = [];
+  JSON.stringify(filteredNodes, (key, value) => {
+  if (key === "id") filteredNodesIds.push(value);
+  return value;
+  });
+  console.log(filteredNodesIds);
+  const filteredLinks = gData.links.filter(
+  (e) =>
+  filteredNodesIds.includes(e.source.id) &&
   filteredNodesIds.includes(e.target.id)
-);
-// console.log(filteredLinks);
-const filteredData = { nodes: filteredNodes, links: filteredLinks };
-console.log(filteredData);
-Graph.graphData(filteredData);
+  );
+  console.log(filteredLinks);
+  const filteredData = { nodes: filteredNodes, links: filteredLinks };
+  console.log(filteredData);
+  Graph.graphData(filteredData);
+}
+const submitBtn = document.getElementById("submit-btn");
+submitBtn.addEventListener("click", function(event) {
+event.preventDefault();
+
+const inputVal = document.getElementById("inputBox").value;
+filterNodes(inputVal);
+});
+
+const resetBtn = document.getElementById("reset-btn");
+resetBtn.addEventListener("click", function(event) {
+event.preventDefault();
+
+const inputVal = document.getElementById("inputBox").value;
+Graph.graphData(gData);
 });
