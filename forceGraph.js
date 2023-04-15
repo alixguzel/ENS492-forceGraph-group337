@@ -1,3 +1,6 @@
+var inputBox = document.getElementById("inputBox");
+var inputValue = inputBox.value;
+
 const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
         .jsonUrl('../Data/Sample/sampleUnzip.json')
