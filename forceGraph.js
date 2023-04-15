@@ -10,6 +10,8 @@ const gData = {
     }))
 };
 
+console.log(gData);
+
 const Graph = ForceGraph3D()
   (document.getElementById('3d-graph'))
     .graphData(gData);
