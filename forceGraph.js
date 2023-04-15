@@ -25,6 +25,8 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeAutoColorBy("group")
   .graphData(gData)
   .onNodeClick(node => createCard(node.id, node.description));
+
+
 /*if(x == 6){
 Graph.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
 }
@@ -55,6 +57,7 @@ function filterNodes(inputval) {
   console.log(filteredData);
   Graph.graphData(filteredData);
 }
+
 const submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
