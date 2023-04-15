@@ -1,75 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <title>Force Graph by Group 337</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style> body { margin: 0; } </style>
-    <script src="//unpkg.com/3d-force-graph"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js" integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!--  <script src="../../dist/3d-force-graph.js"></script>-->
-    <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
+<head>
+  <title>Force Graph by Group 337</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+  <script src="//unpkg.com/3d-force-graph"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
+    integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--  <script src="../../dist/3d-force-graph.js"></script>-->
+  <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
 
 
-    <style>
-      .floating-box {
-        position: fixed;
-        top: 50%;
-        left: 9%;
-        transform: translate(-50%, -50%);
-        background-image: linear-gradient(to bottom right, #5ca0f9, #ffffff);
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  <style>
+    .floating-box {
+      position: fixed;
+      top: 50%;
+      left: 9%;
+      transform: translate(-50%, -50%);
+      background-image: linear-gradient(to bottom right, #5ca0f9, #ffffff);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      margin-bottom: 1px;
+    }
+
+    input[type="text"] {
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 5px;
+    }
+
+    input[type="submit"] {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+
+
+<style>
+  .floating-box-two {
+    position: fixed;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    margin-bottom: 1px;
+  }
+
+  input[type="text"] {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+  }
+
+  input[type="submit"] {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+  <script src="forceGraph.js" type="module"> </script>
+  <div class="floating-box">
+    <form>
+      <label for="inputBox">Enter some text:</label><br>
+      <input type="text" id="inputBox" name="inputBox"><br><br>
+      <button id="submit-btn">Submit</button>
+      <button id="reset-btn"> Reset Changes</button>
+    </form>
+  </div>
+  <script>
+    const createCard = document.getElementById("createCard");
+
+    document.addEventListener("click", function (event) {
+      if (!createCard.contains(event.target)) {
+        createCard.style.display = "none";
       }
-
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-
-      label {
-        font-family: Arial, sans-serif;
-        font-size: 20px;
-        margin-bottom: 1px;
-      }
-
-      input[type="text"] {
-        font-family: Arial, sans-serif;
-        font-size: 20px;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        margin-bottom: 5px;
-      }
-
-      input[type="submit"] {
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        background-color: #4CAF50;
-        color: white;
-      }
-    </style>
-
-
-  </head>
-
-  <body>
-    <div id="3d-graph"></div>
-    <script src="forceGraph.js" type="module" > </script>
-    <div class="floating-box">
-      <form>
-        <label for="inputBox">Enter some text:</label><br>
-        <input type="text" id="inputBox" name="inputBox"><br><br>
-        <button id="submit-btn">Submit</button>
-        <button id = "reset-btn"> Reset Changes</button>
-      </form>
-    </div>
-  </body>
+    });
+  </script>
+</body>
 
 </html>
