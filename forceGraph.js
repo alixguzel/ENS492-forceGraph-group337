@@ -1,8 +1,10 @@
+// Fetch the JSON data
 async function fetchJson() {
   let response = await fetch('./networkData.json');
   let data = await response.json();
   return data;
 }
+
 function download(content, fileName, contentType) {
   var a = document.createElement("a");
   var file = new Blob([content], {type: contentType});
