@@ -4,8 +4,7 @@ async function fetchJson() {
   return data;
 }
 
-// Function to create a floating info box when the user clicks on a node
-// UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
+
 function createFloatingBox(name, num_followers, party) {
   var floatingBox = document.querySelector('.floating-box-two');
 
