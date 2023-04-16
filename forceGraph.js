@@ -5,6 +5,7 @@ async function fetchJson() {
 }
 
 // Function to create a floating info box when the user clicks on a node
+// UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
 function createFloatingBox(title, description) {
   var floatingBox = document.querySelector('.floating-box-two');
 
@@ -33,6 +34,7 @@ function createFloatingBox(title, description) {
 
 // Function to filter nodes based on the input value
 // UPDATE NEEDED: This function should be updated to filter nodes based on the given min followers count
+// UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
 function filterNodes(inputval) {
 
   var filter_num = parseInt(inputval);
