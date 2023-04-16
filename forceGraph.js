@@ -1,12 +1,12 @@
 async function fetchJson() {
-  let response = await fetch('./Data/Sample/Old/data.json');
+  let response = await fetch('./networkData-test.json');
   let data = await response.json();
   return data;
 }
 
 // Function to create a floating info box when the user clicks on a node
 // UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
-function createFloatingBox(title, description) {
+function createFloatingBox(name, num_followers, party) {
   var floatingBox = document.querySelector('.floating-box-two');
 
   if (floatingBox) {
@@ -17,8 +17,10 @@ function createFloatingBox(title, description) {
   node.classList.add("card");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-      <h3 class="card-title">${title}</h3> 
-      <p>${description}</p>
+      <h3 class="card-title">${name}</h3> 
+      <p><b>Number of Followers:</b> ${num_followers}</p>
+      <p><b>Political Party:</b> ${party}</p>
+      <p><b>Twitter:</b> ${party}</p>
       <button class="close-button">
   <span>X</span>
 </button>
@@ -81,10 +83,10 @@ var gData = await fetchJson();
 
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
-  .nodeLabel("id")
-  .nodeAutoColorBy("group")
+  .nodeLabel("screen_name")
+  .nodeAutoColorBy("mean_bot_score")
   .graphData(gData)
-  .onNodeClick(node => createFloatingBox(node.id, node.description));
+  .onNodeClick(node => createFloatingBox(node.name, node.num_followers, node.party));
 
 
 /*
