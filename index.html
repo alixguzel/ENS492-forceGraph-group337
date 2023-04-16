@@ -1,69 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Force Graph by Group 337</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0;
+        position: relative;
+      }
 
-<head>
-  <title>Force Graph by Group 337</title>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      margin: 0;
-    }
+      .search-box {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        z-index: 1;
+      }
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
 
-    /* Search container */
-    .search-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 0px;
-      background: black;
-    }
+      .search-button {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        padding: 5px 10px;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        text-align: center;
+        cursor: pointer;
+      }
 
-    /* Search input */
-    .search-input {
-      width: 192px;
-      padding: 10px 15px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px 0 0 5px;
-      outline: none;
-    }
+      .search-button:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
 
-    /* Search button */
-    .search-button {
-      padding: 10px 15px;
-      font-size: 16px;
-      background-color: #007bff;
-      color: #fff;
-      border: 1px solid #007bff;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
-      outline: none;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
+      .filter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
 
-    /* Search button hover effect */
-    .search-button:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
-  </style>
-  <script src="//unpkg.com/3d-force-graph"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
-    integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!--  <script src="../../dist/3d-force-graph.js"></script>-->
-  <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
-</head>
+      .filter {
+        display: flex;
+        gap: 10px;
+      }
 
-<body>
-  <div class="search-container">
-    <input type="text" id="search-input" class="search-input" placeholder="Enter max follower number" />
-    <button id="search-button" class="search-button">Search</button>
-  </div>
-  <div id="3d-graph"></div>
-  <script src="forceGraph.js" type="module"></script>
-</body>
-
+      .filter-input {
+        padding: 5px;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        width: 115px;
+      }
+    </style>
+    <script src="//unpkg.com/3d-force-graph"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
+      integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"
+    ></script>
+  </head>
+  <body>
+    <div class="search-box" id="search-box">
+      <div class="button-container">
+        <button id="add-filter-button" class="search-button">Add Filter</button>
+        <button id="search-button" class="search-button">Search</button>
+        <button id="reset-button" class="search-button">Reset</button>
+      </div>
+      <div id="filters" class="filter-container"></div>
+    </div>
+    <div id="3d-graph"></div>
+    <script src="forceGraph.js" type="module"></script>
+  </body>
 </html>
