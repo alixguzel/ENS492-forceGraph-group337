@@ -4,6 +4,7 @@ async function fetchJson() {
   return data;
 }
 
+// Function to create a floating info box when the user clicks on a node
 function createFloatingBox(title, description) {
   var floatingBox = document.querySelector('.floating-box-two');
 
@@ -30,6 +31,8 @@ function createFloatingBox(title, description) {
   });
 }
 
+// Function to filter nodes based on the input value
+// UPDATE NEEDED: This function should be updated to filter nodes based on the given min followers count
 function filterNodes(inputval) {
 
   var filter_num = parseInt(inputval);
@@ -52,6 +55,7 @@ function filterNodes(inputval) {
   Graph.graphData(filteredData);
 }
 
+// Event listener for the filter input submit button
 const submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
@@ -60,6 +64,7 @@ submitBtn.addEventListener("click", function (event) {
   filterNodes(inputVal);
 });
 
+// Event listener for removing the filters by clicking on the reset button
 const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", function (event) {
   event.preventDefault();
