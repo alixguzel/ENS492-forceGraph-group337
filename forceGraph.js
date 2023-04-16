@@ -73,7 +73,6 @@ const elem = document.getElementById('3d-graph');
 var gData = await fetchJson();
 
 
-
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("id")
   .nodeAutoColorBy("group")
