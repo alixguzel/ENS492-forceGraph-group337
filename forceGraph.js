@@ -4,10 +4,6 @@ async function fetchJson() {
   return data;
 }
 
-const elem = document.getElementById('3d-graph');
-
-var gData = await fetchJson();
-
 function createFloatingBox(title, description) {
   var floatingBox = document.querySelector('.floating-box-two');
 
@@ -19,7 +15,7 @@ function createFloatingBox(title, description) {
   node.classList.add("card");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-      <h3 class="card-title">${title}</h3>
+      <h3 class="card-title">${title}</h3> 
       <p>${description}</p>
       <button class="close-button">
   <span>X</span>
@@ -33,22 +29,6 @@ function createFloatingBox(title, description) {
     node.remove();
   });
 }
-
-const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
-  .nodeLabel("id")
-  .nodeAutoColorBy("group")
-  .graphData(gData)
-  .onNodeClick(node => createFloatingBox(node.id, node.description));
-
-
-/*if(x == 6){
-Graph.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
-}
-else{
-Graph.nodeVisibility(node => node.group == 1);
-}*/
-
-
 
 function filterNodes(inputval) {
 
@@ -87,3 +67,28 @@ resetBtn.addEventListener("click", function (event) {
   const inputVal = document.getElementById("inputBox").value;
   Graph.graphData(gData);
 });
+
+
+const elem = document.getElementById('3d-graph');
+var gData = await fetchJson();
+
+
+
+const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
+  .nodeLabel("id")
+  .nodeAutoColorBy("group")
+  .graphData(gData)
+  .onNodeClick(node => createFloatingBox(node.id, node.description));
+
+
+/*
+if(x == 6){
+Graph.onNodeClick(node => window.open(`${node.user}/${node.id}`, '_blank'));
+}
+else{
+Graph.nodeVisibility(node => node.group == 1);
+}
+*/
+
+
+
