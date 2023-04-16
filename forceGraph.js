@@ -34,8 +34,6 @@ function createFloatingBox(name, screen_name, num_followers, party) {
 }
 
 // Function to filter nodes based on the input value
-// UPDATE NEEDED: This function should be updated to filter nodes based on the given min followers count
-// UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
 function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF) {
 
   let filteredNodes = gData.nodes
