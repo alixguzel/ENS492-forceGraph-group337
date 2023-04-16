@@ -98,6 +98,7 @@ document.getElementById("search-button").addEventListener("click", () => {
     renderGraph(filteredData);
   });
 });
+
 document.getElementById("reset-button").addEventListener("click", () => {
   const filtersContainer = document.getElementById("filters");
   while (filtersContainer.firstChild) {
