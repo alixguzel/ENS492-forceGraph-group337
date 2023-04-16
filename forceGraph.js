@@ -80,9 +80,9 @@ submitBtn.addEventListener("click", function (event) {
   const minFinputVal = document.getElementById("minF-inputBox").value;
   const maxFinputVal = document.getElementById("maxF-inputBox").value;
 
-  if (partyinputVal != "") {party = true;}
-  if (minFinputVal != "") {minF = true;}
-  if (maxFinputVal != "") {maxF = true;}
+  if (partyinputVal != "") { party = true; }
+  if (minFinputVal != "") { minF = true; }
+  if (maxFinputVal != "") { maxF = true; }
 
   filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
 });
@@ -102,7 +102,7 @@ var gData = await fetchJson();
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("screen_name")
-  .nodeColor(node => {if(node.party == "CHP") {return "red"} else if(node.party == "AKP") {return "yellow"} else if(node.party == "MHP") {return "white"} else if(node.party == "HDP") {return "green"} else if(node.party == "IYI") {return "blue"};})
+  .nodeColor(node => { if (node.party == "CHP") { return "red" } else if (node.party == "AKP") { return "yellow" } else if (node.party == "MHP") { return "white" } else if (node.party == "HDP") { return "green" } else if (node.party == "IYI") { return "blue" }; })
   .graphData(gData)
   .onNodeClick(node => { // Aim at node from outside it
     const distance = 40;
