@@ -20,9 +20,14 @@
   <script src="forceGraph.js" type="module"> </script>
   <div class="floating-box">
     <form>
-      <label for="inputBox">Enter some text:</label><br>
-      <input type="text" id="inputBox" name="inputBox"><br><br>
-      <button id="submit-btn">Submit</button>
+      <legend><b>Filtering Zone</b></legend>
+      <label for="party-inputBox">Political Party</label>
+      <input type="text" id="party-inputBox" name="inputBox">
+      <label for="minF-inputBox">Min Followers</label>
+      <input type="text" id="minF-inputBox" name="inputBox">
+      <label for="maxF-inputBox">Max Followers</label>
+      <input type="text" id="maxF-inputBox" name="inputBox">
+      <button id="submit-btn">Apply Filters</button>
       <button id="reset-btn"> Reset Changes</button>
     </form>
   </div>

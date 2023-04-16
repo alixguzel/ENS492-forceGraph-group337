@@ -5,7 +5,7 @@ async function fetchJson() {
 }
 
 
-function createFloatingBox(name, num_followers, party) {
+function createFloatingBox(name, screen_name, num_followers, party) {
   var floatingBox = document.querySelector('.floating-box-two');
 
   if (floatingBox) {
@@ -19,7 +19,7 @@ function createFloatingBox(name, num_followers, party) {
       <h3 class="card-title">${name}</h3> 
       <p><b>Number of Followers:</b> ${num_followers}</p>
       <p><b>Political Party:</b> ${party}</p>
-      <p><b>Twitter:</b> ${party}</p>
+      <p><b>Twitter:</b> <a href="https://twitter.com/${screen_name}" target="_blank">https://twitter.com/${screen_name}</a></p>
       <button class="close-button">
   <span>X</span>
 </button>
@@ -36,25 +36,36 @@ function createFloatingBox(name, num_followers, party) {
 // Function to filter nodes based on the input value
 // UPDATE NEEDED: This function should be updated to filter nodes based on the given min followers count
 // UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
-function filterNodes(inputval) {
+function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF) {
 
-  var filter_num = parseInt(inputval);
-  const filteredNodes = gData.nodes.filter((n) => n.group == filter_num);
-  console.log(filteredNodes);
+  let filteredNodes = gData.nodes
+
+  console.log(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF)
+
+  if (party) {
+    filteredNodes = filteredNodes.filter((n) => n.party == partyinputVal);
+  }
+  if (minF) {
+    filteredNodes = filteredNodes.filter((n) => n.num_followers > parseInt(minFinputVal));
+  }
+  if (maxF) {
+    filteredNodes = filteredNodes.filter((n) => n.num_followers < parseInt(maxFinputVal));
+  }
+
   const filteredNodesIds = [];
   JSON.stringify(filteredNodes, (key, value) => {
     if (key === "id") filteredNodesIds.push(value);
     return value;
   });
-  console.log(filteredNodesIds);
+
   const filteredLinks = gData.links.filter(
     (e) =>
       filteredNodesIds.includes(e.source.id) &&
       filteredNodesIds.includes(e.target.id)
   );
-  console.log(filteredLinks);
+
   const filteredData = { nodes: filteredNodes, links: filteredLinks };
-  console.log(filteredData);
+
   Graph.graphData(filteredData);
 }
 
@@ -63,8 +74,17 @@ const submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
-  const inputVal = document.getElementById("inputBox").value;
-  filterNodes(inputVal);
+  let party, minF, maxF = false;
+
+  const partyinputVal = document.getElementById("party-inputBox").value;
+  const minFinputVal = document.getElementById("minF-inputBox").value;
+  const maxFinputVal = document.getElementById("maxF-inputBox").value;
+
+  if (partyinputVal != "") {party = true;}
+  if (minFinputVal != "") {minF = true;}
+  if (maxFinputVal != "") {maxF = true;}
+
+  filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
 });
 
 // Event listener for removing the filters by clicking on the reset button
@@ -83,9 +103,24 @@ var gData = await fetchJson();
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("screen_name")
-  .nodeAutoColorBy("mean_bot_score")
+  .nodeAutoColorBy("party")
   .graphData(gData)
-  .onNodeClick(node => createFloatingBox(node.name, node.num_followers, node.party));
+  .onNodeClick(node => { // Aim at node from outside it
+    const distance = 40;
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+    const newPos = node.x || node.y || node.z
+      ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+      : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+    Graph.cameraPosition(
+      newPos, // new position
+      node, // lookAt ({ x, y, z })
+      3000  // ms transition duration
+    ); createFloatingBox(node.name, node.screen_name, node.num_followers, node.party)
+  });
+
+
 
 
 /*

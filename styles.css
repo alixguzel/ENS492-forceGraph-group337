@@ -11,6 +11,8 @@ body {
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    height: 350px;
 }
 
 button {
@@ -21,7 +23,8 @@ button {
     border: none;
     background-color: #4CAF50;
     color: white;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 form {
@@ -31,17 +34,30 @@ form {
 
 label {
     font-family: Arial, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
+    margin-top: 5px;
     margin-bottom: 1px;
 }
 
-input[type="text"] {
+legend {
     font-family: Arial, sans-serif;
-    font-size: 20px;
     padding: 10px;
     border-radius: 10px;
     border: none;
     margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+input[type="text"] {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 4px;
+    margin-top: 0px;
 }
 
 .floating-box-two {
@@ -55,7 +71,7 @@ input[type="text"] {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     height: 200px;
-  }
+}
 
 .close-button {
     position: absolute;
@@ -72,4 +88,4 @@ input[type="text"] {
     position: relative;
     top: -5px;
     left: -5px;
-  }
+}
