@@ -1,8 +1,21 @@
 async function fetchJson() {
-  let response = await fetch('./Data/Sample/Old/data.json');
+  let response = await fetch('./networkData.json');
   let data = await response.json();
   return data;
 }
+function download(content, fileName, contentType) {
+  var a = document.createElement("a");
+  var file = new Blob([content], {type: contentType});
+  a.href = URL.createObjectURL(file);
+  a.download = fileName;
+  a.click();
+}
+
+let res_secim = await fetch('https://secim2023.biz/apps/follower-change');
+let res_text = res_secim.text()
+console.log(res_text);
+
+//download(resp, 'json.txt', 'text/plain');
 
 // Function to create a floating info box when the user clicks on a node
 // UPDATE NEEDED: This function should be updated to work with the sampleUnzip.json file
@@ -18,6 +31,7 @@ function createFloatingBox(title, description) {
   node.classList.add("floating-box-two");
   node.innerHTML = `
       <h3 class="card-title">${title}</h3> 
+      <img> href = ${"https://twitter.com/mtafolar/photo"} </img>
       <p>${description}</p>
       <button class="close-button">
   <span>X</span>
