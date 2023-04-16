@@ -6,30 +6,64 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+    }
+
+    /* Search container */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0px;
+      background: black;
+    }
+
+    /* Search input */
+    .search-input {
+      width: 192px;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+
+    /* Search button */
+    .search-button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: 1px solid #007bff;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Search button hover effect */
+    .search-button:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
   <script src="//unpkg.com/3d-force-graph"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
     integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!--  <script src="../../dist/3d-force-graph.js"></script>-->
   <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-  <div id="3d-graph"></div>
-  <script src="forceGraph.js" type="module"> </script>
   <div class="search-container">
     <input type="text" id="search-input" class="search-input" placeholder="Enter max follower number" />
     <button id="search-button" class="search-button">Search</button>
   </div>
-  <div class="floating-box">
-    <form>
-      <label for="inputBox">Enter some text:</label><br>
-      <input type="text" id="inputBox" name="inputBox"><br><br>
-      <button id="submit-btn">Submit</button>
-      <button id="reset-btn"> Reset Changes</button>
-    </form>
-  </div>
+  <div id="3d-graph"></div>
+  <script src="forceGraph.js" type="module"></script>
 </body>
 
 </html>
