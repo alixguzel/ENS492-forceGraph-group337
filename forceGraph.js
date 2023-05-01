@@ -1,3 +1,5 @@
+let areNodesFiltered = false
+
 async function fetchJson() {
   let response = await fetch('./networkData-test.json');
   let data = await response.json();
@@ -34,9 +36,30 @@ function createFloatingBox(name, screen_name, num_followers, party) {
 }
 
 // Function to filter nodes based on the input value
+function searchNodes(searchInputVal, search) {
+
+  if (search) {
+    let exactNode = gData.nodes.find((n) => n.screen_name == searchInputVal);
+
+    const distance = 40;
+    const distRatio = 1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
+
+    const newPos = exactNode.x || exactNode.y || exactNode.z
+      ? { x: exactNode.x * distRatio, y: exactNode.y * distRatio, z: exactNode.z * distRatio }
+      : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+    Graph.cameraPosition(
+      newPos, // new position
+      exactNode, // lookAt ({ x, y, z })
+      3000  // ms transition duration
+    ); createFloatingBox(exactNode.name, exactNode.screen_name, exactNode.num_followers, exactNode.party)
+  }
+}
+
+
+// Function to filter nodes based on the input value
 function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF) {
 
-  let filteredNodes = gData.nodes
 
   console.log(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF)
 
@@ -64,8 +87,39 @@ function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, max
 
   const filteredData = { nodes: filteredNodes, links: filteredLinks };
 
+  areNodesFiltered = true;
   Graph.graphData(filteredData);
 }
+
+// Event listener for the filter input submit button
+const SearchSubmitBtn = document.getElementById("submit-search-btn");
+SearchSubmitBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+
+  let search = false;
+
+  const searchInputVal = document.getElementById("search-inputBox").value;
+
+  if (searchInputVal != "") {
+    search = true;
+
+    if (areNodesFiltered) {
+
+      const NodeAvailable = filteredNodes.find(n => n.screen_name == searchInputVal);
+
+      if (NodeAvailable) {
+        
+      }
+      else {
+        console.log("Node not found")
+        resetBtn.click();
+      }
+    }
+  }
+
+  searchNodes(searchInputVal, search);
+});
+
 
 // Event listener for the filter input submit button
 const submitBtn = document.getElementById("submit-btn");
@@ -90,12 +144,15 @@ const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
+  areNodesFiltered = false;
   Graph.graphData(gData);
 });
 
 
 const elem = document.getElementById('3d-graph');
 var gData = await fetchJson();
+var filteredNodes = gData.nodes
+console.log(typeof (filteredNodes))
 
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
