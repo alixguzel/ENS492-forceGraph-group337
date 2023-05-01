@@ -35,25 +35,46 @@ function createFloatingBox(name, screen_name, num_followers, party) {
   });
 }
 
-// Function to filter nodes based on the input value
-function searchNodes(searchInputVal, search) {
+function createPopUpBox(textInput) {
+  var floatingPopUpBox = document.querySelector('.floating-box-popUp');
 
-  if (search) {
-    let exactNode = gData.nodes.find((n) => n.screen_name == searchInputVal);
-
-    const distance = 40;
-    const distRatio = 1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
-
-    const newPos = exactNode.x || exactNode.y || exactNode.z
-      ? { x: exactNode.x * distRatio, y: exactNode.y * distRatio, z: exactNode.z * distRatio }
-      : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
-
-    Graph.cameraPosition(
-      newPos, // new position
-      exactNode, // lookAt ({ x, y, z })
-      3000  // ms transition duration
-    ); createFloatingBox(exactNode.name, exactNode.screen_name, exactNode.num_followers, exactNode.party)
+  if (floatingPopUpBox) {
+    floatingPopUpBox.remove();
   }
+
+  const node = document.createElement("div");
+  node.classList.add("card");
+  node.classList.add("floating-box-popUp");
+  node.innerHTML = `
+      <p>${textInput}</p>
+    `;
+
+  document.body.appendChild(node);
+
+  const closeButton = node.querySelector('.close-button');
+  closeButton.addEventListener('click', function () {
+    node.remove();
+  });
+}
+
+// Function to filter nodes based on the input value
+function searchNodes(searchInputVal, createPopUp) {
+
+  let exactNode = gData.nodes.find((n) => n.screen_name == searchInputVal);
+
+  const distance = 40;
+  const distRatio = 1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
+
+  const newPos = exactNode.x || exactNode.y || exactNode.z
+    ? { x: exactNode.x * distRatio, y: exactNode.y * distRatio, z: exactNode.z * distRatio }
+    : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+  Graph.cameraPosition(
+    newPos, // new position
+    exactNode, // lookAt ({ x, y, z })
+    3000  // ms transition duration
+  ); createFloatingBox(exactNode.name, exactNode.screen_name, exactNode.num_followers, exactNode.party)
+  if(createPopUp){createPopUpBox("Filtreler temizlendi")}
 }
 
 
@@ -96,28 +117,30 @@ const SearchSubmitBtn = document.getElementById("submit-search-btn");
 SearchSubmitBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
-  let search = false;
+  let createPopUp = false;
 
   const searchInputVal = document.getElementById("search-inputBox").value;
+  const searchInputValPresent = gData.nodes.find(n => n.screen_name == searchInputVal);
 
-  if (searchInputVal != "") {
-    search = true;
+  if (searchInputVal != "" && searchInputValPresent != undefined) {
 
     if (areNodesFiltered) {
 
       const NodeAvailable = filteredNodes.find(n => n.screen_name == searchInputVal);
 
       if (NodeAvailable) {
-        
+
       }
       else {
         console.log("Node not found")
+        createPopUp = true;
         resetBtn.click();
       }
     }
-  }
 
-  searchNodes(searchInputVal, search);
+    searchNodes(searchInputVal, createPopUp);
+  }
+  else { createPopUpBox("Aradığınız kriterlere uygun sonuç bulunamadı"); }
 });
 
 
@@ -145,6 +168,7 @@ resetBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
   areNodesFiltered = false;
+  filteredNodes = gData.nodes;
   Graph.graphData(gData);
 });
 
