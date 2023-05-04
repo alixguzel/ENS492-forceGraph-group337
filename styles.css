@@ -5,15 +5,15 @@ body {
 
 .floating-box-search {
     position: fixed;
-    top: 30%;
+    top: 20%;
     left: 10%;
     transform: translate(-50%, -50%);
     background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    height: 160px;
+    width: 15vw;
+    height: 21vh;
 }
 
 .floating-box-filter {
@@ -25,8 +25,8 @@ body {
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    height: 340px;
+    width: 15vw;
+    height: 47vh;
 }
 
 button {
