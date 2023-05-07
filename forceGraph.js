@@ -192,11 +192,12 @@ function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, max
   }
 
   const filteredNodesIds = [];
-  JSON.stringify(filteredNodes, (key, value) => {
-    if (key === "id") filteredNodesIds.push(value);
-    return value;
+
+  filteredNodes.forEach(node => {
+    filteredNodesIds.push(node.id);
   });
 
+  
   const filteredLinks = gData.links.filter(
     (e) =>
       filteredNodesIds.includes(e.source.id) &&
