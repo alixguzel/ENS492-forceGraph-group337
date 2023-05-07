@@ -1,9 +1,21 @@
 let areNodesFiltered = false
 
+
+const urlParams = new URLSearchParams(window.location.search);
+const dataParams = urlParams.get('politicianNodes_S3D');
+console.log(dataParams);
+console.log(typeof dataParams)
+
+
 async function fetchJson() {
-  let response = await fetch('./politicianNodes_S3D.json');
-  let data = await response.json();
-  return data;
+    if (dataParams == null){
+      let response = await fetch('./politicianNodes_S3D.json');
+      let data = await response.json();
+      return data;
+    }
+    let response = await fetch('./'+dataParams);
+    let data = await response.json();
+    return data;
 }
 
 var gData = await fetchJson();
