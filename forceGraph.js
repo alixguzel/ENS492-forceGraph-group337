@@ -45,7 +45,7 @@ let hoverNode = null;
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .graphData(gData)
   .nodeLabel("screen_name")
-  .nodeRelSize(20)
+  .nodeRelSize(30)
   .nodeOpacity(1)
   .linkWidth(link => highlightLinks.has(link) ? 10 : 5)
   .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
