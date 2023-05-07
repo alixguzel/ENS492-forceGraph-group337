@@ -1,0 +1,25 @@
+{
+    "nodes" : [
+      { "id": "Labarre", "group": 2 },
+      { "id": "Valjean", "group": 2 },
+      { "id": "Marguerite", "group": 3 },
+      { "id": "Mme.deR", "group": 2 },
+      { "id": "Isabeau", "group": 2 },
+      { "id": "Gervais", "group": 2 }
+    ],
+    "links" : [
+        { "source": "Listolier", "target": "Tholomyes", "value": 4 },
+      { "source": "Fameuil", "target": "Tholomyes", "value": 4 },
+      { "source": "Fameuil", "target": "Listolier", "value": 4 },
+      { "source": "Blacheville", "target": "Tholomyes", "value": 4 },
+      { "source": "Blacheville", "target": "Listolier", "value": 4 },
+      { "source": "Blacheville", "target": "Fameuil", "value": 4 },
+      { "source": "Favourite", "target": "Tholomyes", "value": 3 },
+      { "source": "Favourite", "target": "Listolier", "value": 3 },
+      { "source": "Favourite", "target": "Fameuil", "value": 3 },
+      { "source": "Favourite", "target": "Blacheville", "value": 4 },
+      { "source": "Dahlia", "target": "Tholomyes", "value": 3 },
+      { "source": "Dahlia", "target": "Listolier", "value": 3 }
+    ]
+}
+
