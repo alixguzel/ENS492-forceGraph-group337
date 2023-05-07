@@ -116,13 +116,15 @@ function createFloatingBox(name, screen_name, num_followers, party) {
   node.classList.add("card");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-        <h3 class="card-title">${name}</h3> 
-        <p><b>Number of Followers:</b> ${num_followers}</p>
-        <p><b>Political Party:</b> ${party}</p>
-        <p><b>Twitter:</b> <a href="https://twitter.com/${screen_name}" target="_blank">https://twitter.com/${screen_name}</a></p>
-        <button class="close-button">
-    <span>X</span>
-  </button>
+      <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="..." alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+
       `;
 
   document.body.appendChild(node);

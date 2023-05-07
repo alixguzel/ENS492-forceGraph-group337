@@ -12,33 +12,61 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!--  <script src="../../dist/3d-force-graph.js"></script>-->
   <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-  <div id="3d-graph"></div>
-  <script src="forceGraph.js" type="module"> </script>
-  <div class="floating-box-search">
-    <form>
-      <legend><b>Arama</b></legend>
-      <label for="search-inputBox">Twitter Username</label>
-      <input type="text" id="search-inputBox" name="inputBox">
-      <button id="submit-search-btn">Ara</button>
-    </form>
-  </div>
-  <div class="floating-box-filter">
-    <form>
-      <legend><b>Filtreleme</b></legend>
-      <label for="party-inputBox">Siyasi Parti</label>
-      <input type="text" id="party-inputBox" name="inputBox">
-      <label for="minF-inputBox">Min Takipçi</label>
-      <input type="text" id="minF-inputBox" name="inputBox">
-      <label for="maxF-inputBox">Max Takipçi</label>
-      <input type="text" id="maxF-inputBox" name="inputBox">
-      <button id="submit-btn">Filtrele</button>
-      <button id="reset-btn">Reset</button>
-    </form>
+  <div class="container">
+    <div id="3d-graph"></div>
+    <script src="forceGraph.js" type="module"> </script>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Arama</b></h5>
+            <form>
+              <div class="form-group">
+                <label for="search-inputBox">Twitter Username</label>
+                <input type="text" class="form-control" id="search-inputBox" name="inputBox">
+              </div>
+              <button type="submit" class="btn btn-primary" id="submit-search-btn">Ara</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><b>Filtreleme</b></h5>
+            <form>
+              <fieldset>
+                <div class="form-group">
+                  <label for="party-inputBox">Siyasi Parti</label>
+                  <input type="text" class="form-control" id="party-inputBox" name="inputBox">
+                </div>
+                <div class="form-group">
+                  <label for="minF-inputBox">Min Takipçi</label>
+                  <input type="text" class="form-control" id="minF-inputBox" name="inputBox">
+                </div>
+                <div class="form-group">
+                  <label for="maxF-inputBox">Max Takipçi</label>
+                  <input type="text" class="form-control" id="maxF-inputBox" name="inputBox">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Filtrele</button>
+                <button type="reset" class="btn btn-secondary" id="reset-btn">Reset</button>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
+
 
 </html>

@@ -1,101 +1,45 @@
+/* Override default body margin */
 body {
     margin: 0;
 }
 
-
-.floating-box-search {
+/* Use Bootstrap classes for floating boxes */
+.floating-box-search, .floating-box-filter, .floating-box-two, .floating-box-popUp {
     position: fixed;
-    top: 20%;
-    left: 10%;
-    transform: translate(-50%, -50%);
-    background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
+    background-color: white;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.floating-box-search {
+    top: 20%;
+    left: 10%;
+    transform: translate(-50%, -50%);
     width: 15vw;
     height: 21vh;
 }
 
 .floating-box-filter {
-    position: fixed;
     top: 65%;
     left: 10%;
     transform: translate(-50%, -50%);
-    background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 15vw;
     height: 47vh;
 }
 
-button {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 10px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    margin-top: 5px;
-    margin-bottom: 1px;
-}
-
-legend {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 5px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-}
-
-input[type="text"] {
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid black;
-    margin-bottom: 5px;
-    margin-top: 0px;
-}
-
 .floating-box-two {
-    position: fixed;
     top: 20%;
     left: 90%;
     transform: translate(-50%, -50%);
-    background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     height: 200px;
 }
 
 .floating-box-popUp {
-    position: fixed;
     top: 90%;
     left: 90%;
     transform: translate(-50%, -50%);
-    background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 170px;
     height: 50px;
     animation-name: fadeOut;
@@ -106,17 +50,50 @@ input[type="text"] {
     align-items: center;
 }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-    to {
-        opacity: 0;
-        transform: translate(-50%, -100%);
-    }
+/* Use Bootstrap classes for buttons */
+button {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
+/* Use Bootstrap classes for forms */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 1px;
+}
+
+legend {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+input[type="text"] {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+
+/* Use Bootstrap classes for close button */
 .close-button {
     position: absolute;
     top: 20px;
