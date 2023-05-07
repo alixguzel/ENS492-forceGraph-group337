@@ -1,7 +1,7 @@
 let areNodesFiltered = false
 
 async function fetchJson() {
-  let response = await fetch('./politicianNodes_B3D.json');
+  let response = await fetch('./politicianNodes_S3D.json');
   let data = await response.json();
   return data;
 }
