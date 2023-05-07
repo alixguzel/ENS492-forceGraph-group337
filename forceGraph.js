@@ -2,7 +2,7 @@ let areNodesFiltered = false
 
 
 const urlParams = new URLSearchParams(window.location.search);
-const dataParams = urlParams.get('politicianNodes_S3D.json');
+const dataParams = urlParams.get('data');
 console.log(dataParams);
 console.log(typeof dataParams)
 
