@@ -1,18 +1,23 @@
 let areNodesFiltered = false
 
 async function fetchJson() {
-  let response = await fetch('./politicianNodes_modified_final.json');
+  let response = await fetch('./politicianNodes_B3D.json');
   let data = await response.json();
   return data;
 }
 
 var gData = await fetchJson();
 var filteredNodes = gData.nodes
+console.log(gData.nodes)
 
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("screen_name")
+  .nodeRelSize(20)
+  .nodeOpacity(1)
+  //.nodeColor(node => {return node.color})
   .nodeColor(node => { if (node.party == "CHP") { return "red" } else if (node.party == "AKP") { return "yellow" } else if (node.party == "MHP") { return "white" } else if (node.party == "HDP") { return "green" } else if (node.party == "IYI") { return "blue" }; })
   .graphData(gData)
+  .linkVisibility(false)
   .onNodeClick(node => { // Aim at node from outside it
     const distance = 40;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
@@ -26,10 +31,15 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       node, // lookAt ({ x, y, z })
       3000  // ms transition duration
     ); createFloatingBox(node.name, node.screen_name, node.num_followers, node.party)
-  });
+  })
+  //.onNodeHover(node => { updateVisibility()});
 
 
-
+  function updateVisibility() {
+    // trigger update of highlighted objects in scene
+    Graph
+    .linkVisibility(true)
+  }
 
   function createFloatingBox(name, screen_name, num_followers, party) {
     var floatingBox = document.querySelector('.floating-box-two');
