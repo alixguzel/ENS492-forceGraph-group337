@@ -1,7 +1,7 @@
 let areNodesFiltered = false
 
 async function fetchJson() {
-  let response = await fetch('./networkData-test.json');
+  let response = await fetch('./politicianNodes_modified.json');
   let data = await response.json();
   return data;
 }
