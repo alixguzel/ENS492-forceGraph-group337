@@ -39,6 +39,8 @@ gData.links.forEach(link => {
 
 const highlightNodes = new Set();
 const highlightLinks = new Set();
+const highlightNodes_click = new Set();
+const highlightLinks_click = new Set();
 let hoverNode = null;
 
 
@@ -47,11 +49,11 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .nodeLabel("screen_name")
   .nodeRelSize(30)
   .nodeOpacity(1)
-  .linkWidth(link => highlightLinks.has(link) ? 10 : 5)
-  .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
+  .linkWidth(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? 10 : 5)
+  .linkDirectionalParticles(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? 4 : 0)
   .linkDirectionalParticleWidth(4)
   .nodeColor(node => { if (node.party == "CHP") { return "red" } else if (node.party == "AKP") { return "yellow" } else if (node.party == "MHP") { return "white" } else if (node.party == "HDP") { return "green" } else if (node.party == "IYI") { return "blue" }; })
-  .linkVisibility(link => highlightLinks.has(link))
+  .linkVisibility(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? true : false)
   .onNodeClick(node => { // Aim at node from outside it
     const distance = 40;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
@@ -64,7 +66,8 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       newPos, // new position
       node, // lookAt ({ x, y, z })
       3000  // ms transition duration
-    ); createFloatingBox(node.name, node.screen_name, node.num_followers, node.party)
+    ); createFloatingBox(node.name, node.screen_name, node.num_followers, node.party);
+    clickHighlight(node);
   })
   .onNodeHover(node => {
     // no state change
@@ -95,8 +98,26 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     updateHighlight();
   });
 
-
 function updateHighlight() {
+  // trigger update of highlighted objects in scene
+  Graph
+    .nodeColor(Graph.nodeColor())
+    .linkWidth(Graph.linkWidth())
+    .linkDirectionalParticles(Graph.linkDirectionalParticles());
+}
+
+function clickHighlight(node) {
+  highlightNodes_click.clear();
+  highlightLinks_click.clear();
+  if (node) {
+    highlightNodes_click.add(node);
+    node.neighbors.forEach(neighbor => highlightNodes_click.add(neighbor));
+    node.links.forEach(link => highlightLinks_click.add(link));
+  }
+  updateHighlightClick();
+};
+
+function updateHighlightClick() {
   // trigger update of highlighted objects in scene
   Graph
     .nodeColor(Graph.nodeColor())
@@ -129,6 +150,8 @@ function createFloatingBox(name, screen_name, num_followers, party) {
   const closeButton = node.querySelector('.close-button');
   closeButton.addEventListener('click', function () {
     node.remove();
+    highlightNodes_click.clear();
+    highlightLinks_click.clear();
   });
 }
 
