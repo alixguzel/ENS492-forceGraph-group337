@@ -171,7 +171,7 @@ function createFloatingBox(
   node.classList.add("floating-box-two");
   node.innerHTML = `
   <img src="${imageUrl}" alt="Image description" class="card-image">
-  <h3 class="card-title">${name}-${party}</h3>
+  <h3 class="card-title">${name} - ${party}</h3>
   
   <div class="info-background">
     <div class="info-container">
