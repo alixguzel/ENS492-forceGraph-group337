@@ -155,6 +155,7 @@ function createFloatingBox(
   name,
   screen_name,
   num_followers,
+  party,
   Url,
   num_following
 ) {
