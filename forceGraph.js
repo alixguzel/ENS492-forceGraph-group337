@@ -155,6 +155,7 @@ function createFloatingBox(
   name,
   screen_name,
   num_followers,
+  party,
   Url,
   num_following
 ) {
@@ -164,11 +165,13 @@ function createFloatingBox(
     floatingBox.remove();
   }
 
+  const imageUrl = Url !== "null" ? Url : "ppp.jpg";
+
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-  <img src="pp.jpg" alt="Image description" class="card-image">
-  <h3 class="card-title">${name}</h3>
+  <img src="${imageUrl}" alt="Image description" class="card-image">
+  <h3 class="card-title">${name}-${party}</h3>
   
   <div class="info-background">
     <div class="info-container">
