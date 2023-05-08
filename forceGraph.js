@@ -1,31 +1,28 @@
-let areNodesFiltered = false
-
+let areNodesFiltered = false;
 
 const urlParams = new URLSearchParams(window.location.search);
-const dataParams = urlParams.get('data');
+const dataParams = urlParams.get("data");
 console.log(dataParams);
-console.log(typeof dataParams)
-
+console.log(typeof dataParams);
 
 async function fetchJson() {
   if (dataParams == null) {
-    let response = await fetch('./politicianNodes_S3D.json');
+    let response = await fetch("./politicianNodes_S3D.json");
     let data = await response.json();
     return data;
   }
-  let response = await fetch('./' + dataParams);
+  let response = await fetch("./" + dataParams);
   let data = await response.json();
   return data;
 }
 
 var gData = await fetchJson();
-var filteredNodes = gData.nodes
-
+var filteredNodes = gData.nodes;
 
 // cross-link node objects
-gData.links.forEach(link => {
-  const a = gData.nodes.find(node => node.id === link.source);
-  const b = gData.nodes.find(node => node.id === link.target);
+gData.links.forEach((link) => {
+  const a = gData.nodes.find((node) => node.id === link.source);
+  const b = gData.nodes.find((node) => node.id === link.target);
   !a.neighbors && (a.neighbors = []);
   !b.neighbors && (b.neighbors = []);
   a.neighbors.push(b);
@@ -43,33 +40,64 @@ const highlightNodes_click = new Set();
 const highlightLinks_click = new Set();
 let hoverNode = null;
 
-
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .graphData(gData)
   .nodeLabel("screen_name")
   .nodeRelSize(30)
   .nodeOpacity(1)
-  .linkWidth(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? 10 : 5)
-  .linkDirectionalParticles(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? 4 : 0)
+  .linkWidth((link) =>
+    highlightLinks.has(link) || highlightLinks_click.has(link) ? 10 : 5
+  )
+  .linkDirectionalParticles((link) =>
+    highlightLinks.has(link) || highlightLinks_click.has(link) ? 4 : 0
+  )
   .linkDirectionalParticleWidth(4)
-  .nodeColor(node => { if (node.party == "CHP") { return "red" } else if (node.party == "AKP") { return "yellow" } else if (node.party == "MHP") { return "white" } else if (node.party == "HDP") { return "green" } else if (node.party == "IYI") { return "blue" }; })
-  .linkVisibility(link => (highlightLinks.has(link) || highlightLinks_click.has(link)) ? true : false)
-  .onNodeClick(node => { // Aim at node from outside it
+  .nodeColor((node) => {
+    if (node.party == "CHP") {
+      return "red";
+    } else if (node.party == "AKP") {
+      return "yellow";
+    } else if (node.party == "MHP") {
+      return "white";
+    } else if (node.party == "HDP") {
+      return "green";
+    } else if (node.party == "IYI") {
+      return "blue";
+    }
+  })
+  .linkVisibility((link) =>
+    highlightLinks.has(link) || highlightLinks_click.has(link) ? true : false
+  )
+  .onNodeClick((node) => {
+    // Aim at node from outside it
     const distance = 40;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
 
-    const newPos = node.x || node.y || node.z
-      ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
-      : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+    const newPos =
+      node.x || node.y || node.z
+        ? {
+            x: node.x * distRatio,
+            y: node.y * distRatio,
+            z: node.z * distRatio,
+          }
+        : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
     Graph.cameraPosition(
       newPos, // new position
       node, // lookAt ({ x, y, z })
-      3000  // ms transition duration
-    ); createFloatingBox(node.name, node.screen_name, node.num_followers, node.party);
+      3000 // ms transition duration
+    );
+    createFloatingBox(
+      node.name,
+      node.screen_name,
+      node.num_followers,
+      node.party,
+      node.Url,
+      node.num_following
+    );
     clickHighlight(node);
   })
-  .onNodeHover(node => {
+  .onNodeHover((node) => {
     // no state change
     if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
 
@@ -77,15 +105,15 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     highlightLinks.clear();
     if (node) {
       highlightNodes.add(node);
-      node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
-      node.links.forEach(link => highlightLinks.add(link));
+      node.neighbors.forEach((neighbor) => highlightNodes.add(neighbor));
+      node.links.forEach((link) => highlightLinks.add(link));
     }
 
     hoverNode = node || null;
 
     updateHighlight();
   })
-  .onLinkHover(link => {
+  .onLinkHover((link) => {
     highlightNodes.clear();
     highlightLinks.clear();
 
@@ -100,8 +128,7 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
 
 function updateHighlight() {
   // trigger update of highlighted objects in scene
-  Graph
-    .nodeColor(Graph.nodeColor())
+  Graph.nodeColor(Graph.nodeColor())
     .linkWidth(Graph.linkWidth())
     .linkDirectionalParticles(Graph.linkDirectionalParticles());
 }
@@ -111,44 +138,61 @@ function clickHighlight(node) {
   highlightLinks_click.clear();
   if (node) {
     highlightNodes_click.add(node);
-    node.neighbors.forEach(neighbor => highlightNodes_click.add(neighbor));
-    node.links.forEach(link => highlightLinks_click.add(link));
+    node.neighbors.forEach((neighbor) => highlightNodes_click.add(neighbor));
+    node.links.forEach((link) => highlightLinks_click.add(link));
   }
   updateHighlightClick();
-};
+}
 
 function updateHighlightClick() {
   // trigger update of highlighted objects in scene
-  Graph
-    .nodeColor(Graph.nodeColor())
+  Graph.nodeColor(Graph.nodeColor())
     .linkWidth(Graph.linkWidth())
     .linkDirectionalParticles(Graph.linkDirectionalParticles());
 }
 
-function createFloatingBox(name, screen_name, num_followers, party) {
-  var floatingBox = document.querySelector('.floating-box-two');
+function createFloatingBox(
+  name,
+  screen_name,
+  num_followers,
+  Url,
+  num_following
+) {
+  var floatingBox = document.querySelector(".floating-box-two");
 
   if (floatingBox) {
     floatingBox.remove();
   }
 
   const node = document.createElement("div");
-  node.classList.add("card");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-        <h3 class="card-title">${name}</h3> 
-        <p><b>Number of Followers:</b> ${num_followers}</p>
-        <p><b>Political Party:</b> ${party}</p>
-        <p><b>Twitter:</b> <a href="https://twitter.com/${screen_name}" target="_blank">https://twitter.com/${screen_name}</a></p>
-        <button class="close-button">
-    <span>X</span>
+  <img src="pp.jpg" alt="Image description" class="card-image">
+  <h3 class="card-title">${name}</h3>
+  
+  <div class="info-background">
+    <div class="info-container">
+      <div class="followers-info">
+        <p class="takip">Takipçiler</p>
+        <p class="yazi">${num_followers}</p>
+      </div>
+      <div class="party-info">
+        <p class="takip">Takip Edilenler</p>
+        <p class="yazi">${num_following}</p>
+      </div>
+    </div>
+  </div>
+  <button class="twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')">
+    Twitter'a git
   </button>
-      `;
+  <button class="close-button">
+    <span>X</span>
+  </button>`;
 
   document.body.appendChild(node);
 
-  const closeButton = node.querySelector('.close-button');
-  closeButton.addEventListener('click', function () {
+  const closeButton = node.querySelector(".close-button");
+  closeButton.addEventListener("click", function () {
     node.remove();
     highlightNodes_click.clear();
     highlightLinks_click.clear();
@@ -156,7 +200,7 @@ function createFloatingBox(name, screen_name, num_followers, party) {
 }
 
 function createPopUpBox(textInput) {
-  var floatingPopUpBox = document.querySelector('.floating-box-popUp');
+  var floatingPopUpBox = document.querySelector(".floating-box-popUp");
 
   if (floatingPopUpBox) {
     floatingPopUpBox.remove();
@@ -171,56 +215,78 @@ function createPopUpBox(textInput) {
 
   document.body.appendChild(node);
 
-  const closeButton = node.querySelector('.close-button');
-  closeButton.addEventListener('click', function () {
+  const closeButton = node.querySelector(".close-button");
+  closeButton.addEventListener("click", function () {
     node.remove();
   });
 }
 
 // Function to filter nodes based on the input value
 function searchNodes(searchInputVal, createPopUp) {
-
   let exactNode = gData.nodes.find((n) => n.screen_name == searchInputVal);
 
   const distance = 40;
-  const distRatio = 1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
+  const distRatio =
+    1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
 
-  const newPos = exactNode.x || exactNode.y || exactNode.z
-    ? { x: exactNode.x * distRatio, y: exactNode.y * distRatio, z: exactNode.z * distRatio }
-    : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+  const newPos =
+    exactNode.x || exactNode.y || exactNode.z
+      ? {
+          x: exactNode.x * distRatio,
+          y: exactNode.y * distRatio,
+          z: exactNode.z * distRatio,
+        }
+      : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
   Graph.cameraPosition(
     newPos, // new position
     exactNode, // lookAt ({ x, y, z })
-    3000  // ms transition duration
-  ); createFloatingBox(exactNode.name, exactNode.screen_name, exactNode.num_followers, exactNode.party)
-  if (createPopUp) { createPopUpBox("Filtreler temizlendi") }
+    3000 // ms transition duration
+  );
+  createFloatingBox(
+    exactNode.name,
+    exactNode.screen_name,
+    exactNode.num_followers,
+    exactNode.party,
+    exactNode.Url,
+    exactNode.num_following
+  );
+  if (createPopUp) {
+    createPopUpBox("Filtreler temizlendi");
+  }
 }
 
-
 // Function to filter nodes based on the input value
-function filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF) {
-
-
-  console.log(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF)
+function filterNodes(
+  partyinputVal,
+  minFinputVal,
+  maxFinputVal,
+  party,
+  minF,
+  maxF
+) {
+  console.log(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
 
   if (party) {
     filteredNodes = filteredNodes.filter((n) => n.party == partyinputVal);
   }
   if (minF) {
-    filteredNodes = filteredNodes.filter((n) => n.num_followers > parseInt(minFinputVal));
+    filteredNodes = filteredNodes.filter(
+      (n) => n.num_followers > parseInt(minFinputVal)
+    );
   }
   if (maxF) {
-    filteredNodes = filteredNodes.filter((n) => n.num_followers < parseInt(maxFinputVal));
+    filteredNodes = filteredNodes.filter(
+      (n) => n.num_followers < parseInt(maxFinputVal)
+    );
   }
 
   const filteredNodesIds = [];
 
-  filteredNodes.forEach(node => {
+  filteredNodes.forEach((node) => {
     filteredNodesIds.push(node.id);
   });
 
-  
   const filteredLinks = gData.links.filter(
     (e) =>
       filteredNodesIds.includes(e.source.id) &&
@@ -241,44 +307,52 @@ SearchSubmitBtn.addEventListener("click", function (event) {
   let createPopUp = false;
 
   const searchInputVal = document.getElementById("search-inputBox").value;
-  const searchInputValPresent = gData.nodes.find(n => n.screen_name == searchInputVal);
+  const searchInputValPresent = gData.nodes.find(
+    (n) => n.screen_name == searchInputVal
+  );
 
   if (searchInputVal != "" && searchInputValPresent != undefined) {
-
     if (areNodesFiltered) {
-
-      const NodeAvailable = filteredNodes.find(n => n.screen_name == searchInputVal);
+      const NodeAvailable = filteredNodes.find(
+        (n) => n.screen_name == searchInputVal
+      );
 
       if (NodeAvailable) {
-
-      }
-      else {
-        console.log("Node not found")
+      } else {
+        console.log("Node not found");
         createPopUp = true;
         resetBtn.click();
       }
     }
 
     searchNodes(searchInputVal, createPopUp);
+  } else {
+    createPopUpBox("Aradığınız kriterlere uygun sonuç bulunamadı");
   }
-  else { createPopUpBox("Aradığınız kriterlere uygun sonuç bulunamadı"); }
 });
-
 
 // Event listener for the filter input submit button
 const submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
-  let party, minF, maxF = false;
+  let party,
+    minF,
+    maxF = false;
 
   const partyinputVal = document.getElementById("party-inputBox").value;
   const minFinputVal = document.getElementById("minF-inputBox").value;
   const maxFinputVal = document.getElementById("maxF-inputBox").value;
 
-  if (partyinputVal != "") { party = true; }
-  if (minFinputVal != "") { minF = true; }
-  if (maxFinputVal != "") { maxF = true; }
+  if (partyinputVal != "") {
+    party = true;
+  }
+  if (minFinputVal != "") {
+    minF = true;
+  }
+  if (maxFinputVal != "") {
+    maxF = true;
+  }
 
   filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
 });

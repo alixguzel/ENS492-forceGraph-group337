@@ -76,16 +76,17 @@ input[type="text"] {
 
 .floating-box-two {
     position: fixed;
-    top: 20%;
-    left: 90%;
-    transform: translate(-50%, -50%);
+    top: 10px;
+    right: 10px;
     background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    height: 200px;
-}
+    width: 220px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+  }
 
 .floating-box-popUp {
     position: fixed;
@@ -133,3 +134,95 @@ input[type="text"] {
     top: -5px;
     left: -5px;
 }
+
+.card-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .twitter-btn {
+    background-color: #0000007e;
+    border: none;
+    color: #fff;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 1em;
+    width: 100%;
+  }
+
+  
+.twitter-btn,
+.close-button {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+}
+  .image-container {
+    position: relative;
+  }
+  
+  .close-button {
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+    padding-left: 13px;
+    padding-bottom: 13px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #555;
+    cursor: pointer;
+    
+  }
+  
+  .close-button span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .info-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+  }
+  
+  .followers-info p,
+    .party-info p {
+    line-height: 1.2;
+    margin: 0;
+    font-weight: lighter;
+    }
+    .followers-info {
+        margin-right: 1em;
+      }
+.card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+}
+.info-background {
+    background-color: rgba(0, 0, 0, 0.078);
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 1em;
+    
+    border-radius: 10px;
+    
+  }
+  .takip{
+    font-size: 12px;
+    font-weight: lighter;
+    color: #555;
+  }
+
+  .yazi{
+    text-align: center;
+    font-size: 14px;
+  }
