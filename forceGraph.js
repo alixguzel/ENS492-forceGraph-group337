@@ -189,16 +189,17 @@ function createFloatingBox(
     </div>
   </div>
   <button class="twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')">
-    Twitter'a git
+    Twitter'a Git
   </button>
   <button class="close-button">
     <span>X</span>
   </button>
   <div>
-  <a class="twitter-timeline" data-width="280" data-height="400" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
+  <a class="twitter-timeline" data-width="300" data-height="420" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
   </div>
   `;
   document.body.appendChild(node);
+  twttr.widgets.load()
 
   const closeButton = node.querySelector(".close-button");
   closeButton.addEventListener("click", function () {
