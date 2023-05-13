@@ -150,6 +150,7 @@ input[type="text"] {
 }
 
 .twitter-btn {
+  vertical-align: middle;
   background-color: #1da1f2;
   border: none;
   text-align: center;
@@ -159,8 +160,13 @@ input[type="text"] {
   border-radius: 0.5rem;
   cursor: pointer;
   text-decoration: none;
-  margin: 2px, 2px, 2px, 2px;
   width: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 .ff {
   background-color: #1da1f2;
