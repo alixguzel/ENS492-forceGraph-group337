@@ -76,10 +76,10 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     const newPos =
       node.x || node.y || node.z
         ? {
-            x: node.x * distRatio,
-            y: node.y * distRatio,
-            z: node.z * distRatio,
-          }
+          x: node.x * distRatio,
+          y: node.y * distRatio,
+          z: node.z * distRatio,
+        }
         : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
     Graph.cameraPosition(
@@ -170,11 +170,14 @@ function createFloatingBox(
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-  <img src="${imageUrl}" alt="Image description" class="card-image">
-  <h3 class="card-title">${name} - ${party}</h3>
+  <h3 class="card-title">${name}</h3>
   
   <div class="info-background">
     <div class="info-container">
+      <div class="followers-info">
+        <p class="takip">Parti</p>
+        <p class="yazi">${party}</p>
+      </div>
       <div class="followers-info">
         <p class="takip">Takipçiler</p>
         <p class="yazi">${num_followers}</p>
@@ -190,8 +193,11 @@ function createFloatingBox(
   </button>
   <button class="close-button">
     <span>X</span>
-  </button>`;
-
+  </button>
+  <div>
+  <a class="twitter-timeline" data-width="280" data-height="400" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
+  </div>
+  `;
   document.body.appendChild(node);
 
   const closeButton = node.querySelector(".close-button");
@@ -235,10 +241,10 @@ function searchNodes(searchInputVal, createPopUp) {
   const newPos =
     exactNode.x || exactNode.y || exactNode.z
       ? {
-          x: exactNode.x * distRatio,
-          y: exactNode.y * distRatio,
-          z: exactNode.z * distRatio,
-        }
+        x: exactNode.x * distRatio,
+        y: exactNode.y * distRatio,
+        z: exactNode.z * distRatio,
+      }
       : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
   Graph.cameraPosition(
