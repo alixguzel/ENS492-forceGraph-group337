@@ -7,7 +7,7 @@ console.log(typeof dataParams);
 
 async function fetchJson() {
   if (dataParams == null) {
-    let response = await fetch("./politicianNodes_3DForce.json");
+    let response = await fetch("./politicianNodes_S3DForce.json");
     let data = await response.json();
     return data;
   }
