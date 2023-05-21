@@ -43,7 +43,7 @@ let hoverNode = null;
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .graphData(gData)
   .nodeLabel("screen_name")
-  .nodeVal((node) => node.size * 100)
+  .nodeVal((node) => node.num_followers / 1000)
   .nodeOpacity(1)
   .linkWidth((link) =>
     highlightLinks.has(link) || highlightLinks_click.has(link) ? 10 : 5
