@@ -192,36 +192,68 @@ function createFloatingBox(
   const imageUrl = Url !== "null" ? Url : "ppp.jpg";
 
   const node = document.createElement("div");
-  node.classList.add("floating-box-two");
-  node.innerHTML = `
-  <h3 class="card-title">${name}</h3>
-  
-  <div class="info-background">
-    <div class="info-container">
-      <div class="followers-info">
-        <p class="takip">Parti</p>
-        <p class="yazi">${party}</p>
-      </div>
-      <div class="followers-info">
-        <p class="takip">Takipçiler</p>
-        <p class="yazi">${num_followers}</p>
-      </div>
-      <div class="party-info">
-        <p class="takip">Takip Edilenler</p>
-        <p class="yazi">${num_following}</p>
+node.classList.add("floating-box-two");
+node.innerHTML = `
+<div class="card" style = "position: fixed;
+top: 10px;
+right: 10px;
+background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
+padding: 20px;
+border-radius: 20px;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+width: 300px;
+height: 800px;
+display: flex;
+flex-direction: column;">
+  <div class="card-body">
+    <h3 class="card-title">${name}</h3>
+    <div class="info-background">
+      <div class="info-container">
+        <div class="followers-info">
+          <p class="takip">Parti : ${party}</p>
+          
+        </div>
+        <div class="followers-info">
+          <p class="takip" style = "font-size: 12px;
+          font-weight: lighter;
+          color: #555;">Takipçiler : ${num_followers}</p>
+          
+        </div>
+        <div class="party-info">
+          <p class="takip">Takip Edilenler</p>
+          <p class="yazi">${num_following}</p>
+        </div>
       </div>
     </div>
+    <div id="timelineContainer">
+      <a class="twitter-timeline" data-width="300" data-height="420" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
+    </div>
+    <button class="btn btn-primary twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')">
+      Twitter'a Git
+    </button>
+    <button class="close-button">
+      <span>X</span>
+    </button>
+    
   </div>
-  <button class="twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')">
-    Twitter'a Git
-  </button>
-  <button class="close-button">
-    <span>X</span>
-  </button>
-  <div>
-  <a class="twitter-timeline" data-width="300" data-height="420" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
-  </div>
-  `;
+</div>
+`;
+
+// Calculate and update the card's height based on the timeline element's height
+window.addEventListener('DOMContentLoaded', () => {
+  const timelineContainer = document.getElementById('timelineContainer');
+  const timelineElement = timelineContainer.querySelector('.twitter-timeline');
+  timelineElement.addEventListener('load', () => {
+    const timelineHeight = timelineElement.offsetHeight;
+    const cardBody = timelineContainer.closest('.card-body');
+    const card = cardBody.closest('.card');
+    const currentCardHeight = card.offsetHeight;
+    const newCardHeight = currentCardHeight + timelineHeight;
+    card.style.height = `${newCardHeight}px`;
+  });
+});
+
+
   document.body.appendChild(node);
   twttr.widgets.load()
 
