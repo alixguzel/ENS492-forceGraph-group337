@@ -293,7 +293,7 @@ function createPopUpBox(textInput) {
 
 // Function to filter nodes based on the input value
 function searchNodes(searchInputVal, createPopUp) {
-  let exactNode = gData.nodes.find((n) => n.screen_name == searchInputVal);
+  let exactNode = gData.nodes.find((n) => n.name == searchInputVal);
 
   const distance = 40;
   const distRatio =
@@ -378,13 +378,13 @@ SearchSubmitBtn.addEventListener("click", function (event) {
 
   const searchInputVal = document.getElementById("user-select").value;
   const searchInputValPresent = gData.nodes.find(
-    (n) => n.screen_name == searchInputVal
+    (n) => n.name == searchInputVal
   );
 
   if (searchInputVal != "" && searchInputValPresent != undefined) {
     if (areNodesFiltered) {
       const NodeAvailable = filteredNodes.find(
-        (n) => n.screen_name == searchInputVal
+        (n) => n.name == searchInputVal
       );
 
       if (NodeAvailable) {

@@ -1,173 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Force Graph by Group 337</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="//unpkg.com/3d-force-graph"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
-      integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!--  <script src="../../dist/3d-force-graph.js"></script>-->
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
-    />
-  </head>
 
-  <body>
-    <script>
-      window.twttr = (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0],
-          t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
+<head>
+  <title>Force Graph by Group 337</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="//unpkg.com/3d-force-graph"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
+    integrity="sha512-WoO4Ih0CDOSLYafy22wZD/mcJ7k0ESLqtQsFa6zFKnEUrbtuGU+GkLtVhgt93xa2qewG5gKEC6CWlN8OaCTSVg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--  <script src="../../dist/3d-force-graph.js"></script>-->
+  <script type="text/javascript" src="https://unpkg.com/hexo-fs@4.1.1/dist/fs.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
+</head>
 
-        t._e = [];
-        t.ready = function (f) {
-          t._e.push(f);
-        };
+<body>
+  <script>
+    window.twttr = (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
 
-        return t;
-      })(document, "script", "twitter-wjs");
-    </script>
-    <div id="3d-graph"></div>
-    <div>
-      <script src="forceGraph.js" type="module"></script>
-    </div>
+      t._e = [];
+      t.ready = function (f) {
+        t._e.push(f);
+      };
 
-    <div
-      class="card fixed-top"
-      style="
+      return t;
+    })(document, "script", "twitter-wjs");
+  </script>
+  <div id="3d-graph"></div>
+  <div>
+    <script src="forceGraph.js" type="module"></script>
+  </div>
+
+  <div class="card fixed-top" style="
         left: 2%;
         top: 10%;
         width: 20vw;
         height: 25vh;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-      "
-    >
-      <div class="card-body d-flex flex-column justify-content-between">
-        <h5 class="card-title">Arama</h5>
-        <form class="form">
-          <div class="form-group">
-            <label class="x" for="user-select">Twitter Username</label>
-            <select
-              class="form-control"
-              id="user-select"
-              name="inputBox"
-            ></select>
-          </div>
-        </form>
-        <button class="btn btn-primary" id="submit-search-btn">Ara</button>
-      </div>
+      ">
+    <div class="card-body d-flex flex-column justify-content-between">
+      <h5 class="card-title">Arama</h5>
+      <form class="form">
+        <div class="form-group">
+          <label class="x" for="user-select">Siyasi Kişi</label>
+          <select class="form-control" id="user-select" name="inputBox"></select>
+        </div>
+      </form>
+      <button class="btn btn-primary" id="submit-search-btn">Ara</button>
     </div>
+  </div>
 
-    <div>
-      <div
-        class="card fixed-top"
-        style="
+  <div>
+    <div class="card fixed-top" style="
           left: 2%;
           top: 40%;
           width: 20vw;
           height: 40vh;
           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
           border-radius: 20px;
-        "
-      >
-        <div class="card-body">
-          <h5 class="card-title">Filtreleme</h5>
-          <form class="form">
-            <div class="form-group">
-              <label class="x" for="party-inputBox">Siyasi Parti</label>
-              <input
-                type="text"
-                class="form-control"
-                id="party-inputBox"
-                name="inputBox"
-              />
+        ">
+      <div class="card-body">
+        <h5 class="card-title">Filtreleme</h5>
+        <form class="form">
+          <div class="form-group">
+            <label class="x" for="party-inputBox">Siyasi Parti</label>
+            <input type="text" class="form-control" id="party-inputBox" name="inputBox" />
+          </div>
+          <div class="form-group">
+            <label class="x" for="minF-inputBox">Min Takipçi</label>
+            <div class="d-flex align-items-center">
+              <input type="range" class="form-control-range w-100" id="minF-inputBox" name="inputBox" min="0"
+                max="50000" value="0" />
+              <span id="minF-output">0</span>
             </div>
-            <div class="form-group">
-              <label class="x" for="minF-inputBox">Min Takipçi</label>
-              <div class="d-flex align-items-center">
-                <input
-                  type="range"
-                  class="form-control-range w-100"
-                  id="minF-inputBox"
-                  name="inputBox"
-                  min="0"
-                  max="50000"
-                  value="0"
-                />
-                <span id="minF-output">0</span>
+          </div>
+          <div class="form-group">
+            <label class="x" for="maxF-inputBox">Max Takipçi</label>
+            <div class="d-flex align-items-center">
+              <input type="range" class="form-control-range w-100" id="maxF-inputBox" name="inputBox" min="0" max=""
+                value="0" />
+              <span id="maxF-output">0</span>
+            </div>
+          </div>
+          <div class="pt-3">
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-primary w-100" id="submit-btn">
+                  Filtrele
+                </button>
+              </div>
+              <div class="col">
+                <button class="btn btn-secondary w-100" id="reset-btn">
+                  Reset
+                </button>
               </div>
             </div>
-            <div class="form-group">
-              <label class="x" for="maxF-inputBox">Max Takipçi</label>
-              <div class="d-flex align-items-center">
-                <input
-                  type="range"
-                  class="form-control-range w-100"
-                  id="maxF-inputBox"
-                  name="inputBox"
-                  min="0"
-                  max=""
-                  value="0"
-                />
-                <span id="maxF-output">0</span>
-              </div>
-            </div>            
-            <div class="pt-3">
-              <div class="row">
-                <div class="col">
-                  <button class="btn btn-primary w-100" id="submit-btn">
-                    Filtrele
-                  </button>
-                </div>
-                <div class="col">
-                  <button class="btn btn-secondary w-100" id="reset-btn">
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
-    <script>
-      window.onload = function () {
-        fetch("./politicianNodes_S3DForce.json")
-          .then((response) => response.json())
-          .then((data) => {
-            var select = document.getElementById("user-select");
-            for (var i = 0; i < data.nodes.length; i++) {
-              var opt = document.createElement("option");
-              opt.value = data.nodes[i].screen_name;
-              opt.innerHTML = data.nodes[i].screen_name;
-              select.appendChild(opt);
-            }
-          })
-          .catch((error) => console.error("Error:", error));
-        document.getElementById("minF-inputBox").oninput = function () {
-          document.getElementById("minF-output").textContent = this.value;
-        };
-        document.getElementById("maxF-inputBox").oninput = function () {
-          document.getElementById("maxF-output").textContent = this.value;
-        };
+  </div>
+  <script>
+    window.onload = function () {
+      fetch("./politicianNodes_S3DForce.json")
+        .then((response) => response.json())
+        .then((data) => {
+          var select = document.getElementById("user-select");
+          for (var i = 0; i < data.nodes.length; i++) {
+            var opt = document.createElement("option");
+            opt.value = data.nodes[i].name;
+            opt.innerHTML = data.nodes[i].name;
+            select.appendChild(opt);
+            data.nodes.sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+      document.getElementById("minF-inputBox").oninput = function () {
+        document.getElementById("minF-output").textContent = this.value;
       };
-    </script>
-  </body>
+      document.getElementById("maxF-inputBox").oninput = function () {
+        document.getElementById("maxF-output").textContent = this.value;
+      };
+    };
+  </script>
+</body>
+
 </html>
