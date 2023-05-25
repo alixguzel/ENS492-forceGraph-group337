@@ -195,47 +195,50 @@ function createFloatingBox(
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-  <div class="card" style = "position: fixed;
- top: 10px;
- right: 10px;
- background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
- padding: 0px;
- border-radius: 20px;
- box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
- width: 350px;
- height: 620px;
- display: flex;
- flex-direction: column;">
- <div class="card-body">
- <button type="button" class="btn-close rounded-circle close-button" aria-label="Close" style="float:right;"></button>
- <h5 class="card-title">${name}</h5>
- <p>${party}</p>
- <button class="btn btn-primary twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')" style="width: 100%; margin-bottom: 8px;">
- Twitter'a Git
-</button>
+  <div class="card" style = "position: fixed; top: 10px; right: 10px; background-image: linear-gradient(to bottom right, #ffffff, #ffffff); padding: 0px; border-radius: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width: 350px; height: 640px; display: flex; flex-direction: column;">
+    <div class="card-body">
+        <button type="button" class="btn-close rounded-circle close-button" aria-label="Close" style="float:right;"></button>
+        <h5 class="card-title text-center">${name}</h5>
+        <div class="container-fluid bg-light rounded-3 pt-2 mt-2 mb-0 ml-2 mr-2 text-center">
+            <div class="row align-items-start">
+                <div class="col-sm-4">
+                    <div>
+                        <h6 class="fw-bold fs-12 mb-0">Parti</h6>
+                        <p class="fs-14">${party}</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div>
+                        <h6 class="fw-bold fs-12 mb-0">Takipçiler</h6>
+                        <p class="fs-14">${num_followers}</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div>
+                        <h6 class="fw-bold fs-12 mb-0">Takip Edilenler</h6>
+                        <p class="fs-14">${num_following}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')" style="width: 100%; margin-bottom: 8px;"> Twitter'a Git</button>
+        <div class="info-background">
+            <div class="info-container">
+                <div class="followers-info">
+                </div>
+                <div class="followers-info">
+                </div>
+                <div class="party-info">
+                </div>
+            </div>
+        </div>
 
- <div class="info-background">
- <div class="info-container">
- <div class="followers-info">
- 
- 
- </div>
- <div class="followers-info">
- 
- 
- </div>
- <div class="party-info">
- 
- 
- </div>
- </div>
- </div>
- <div id="timelineContainer">
- <a class="twitter-timeline" data-width="450" data-height="450" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
- </div>
- 
- </div>
- </div>
+        <div id="timelineContainer">
+            <a class="twitter-timeline" data-width="450" data-height="450" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a> 
+        </div> 
+    </div> 
+</div> 
+
 
   
 `;
