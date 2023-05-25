@@ -72,10 +72,12 @@
       <div class="card-body">
         <h5 class="card-title">Filtreleme</h5>
         <form class="form">
-          <div class="form-group">
-            <label class="x" for="party-inputBox">Siyasi Parti</label>
-            <input type="text" class="form-control" id="party-inputBox" name="inputBox" />
-          </div>
+          <form class="form">
+            <div class="form-group">
+              <label class="x" for="user-select">Siyasi Parti</label>
+              <select class="form-control" id="party-inputBox" name="inputBox"></select>
+            </div>
+          </form>
           <div class="form-group">
             <label class="x" for="minF-inputBox">Min Takipçi</label>
             <div class="d-flex align-items-center">
@@ -125,6 +127,17 @@
               return a.name.localeCompare(b.name);
             });
           }
+
+          var select = document.getElementById("party-inputBox");
+          var unique = [...new Set(data.nodes.map(item => item.party))];
+          unique.sort();
+          for (var i = 0; i < unique.length; i++) {
+            var opt = document.createElement("option");
+            opt.value = unique[i];
+            opt.innerHTML = unique[i];
+            select.appendChild(opt);
+          }
+          return select;
         })
         .catch((error) => console.error("Error:", error));
       document.getElementById("minF-inputBox").oninput = function () {
