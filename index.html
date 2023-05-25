@@ -81,7 +81,7 @@
           left: 2%;
           top: 40%;
           width: 20vw;
-          height: 47vh;
+          height: 40vh;
           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         "
       >
@@ -102,7 +102,7 @@
               <div class="d-flex align-items-center">
                 <input
                   type="range"
-                  class="form-control-range"
+                  class="form-control-range w-100"
                   id="minF-inputBox"
                   name="inputBox"
                   min="0"
@@ -117,26 +117,28 @@
               <div class="d-flex align-items-center">
                 <input
                   type="range"
-                  class="form-control-range"
+                  class="form-control-range w-100"
                   id="maxF-inputBox"
                   name="inputBox"
                   min="0"
-                  max="10000"
+                  max="10000000"
                   value="0"
                 />
                 <span id="maxF-output">0</span>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-primary w-100" id="submit-btn">
-                  Filtrele
-                </button>
-              </div>
-              <div class="col">
-                <button class="btn btn-secondary w-100" id="reset-btn">
-                  Reset
-                </button>
+            <div class="pt-3">
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-primary w-100" id="submit-btn">
+                    Filtrele
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-secondary w-100" id="reset-btn">
+                    Reset
+                  </button>
+                </div>
               </div>
             </div>
           </form>
