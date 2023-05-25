@@ -27,6 +27,7 @@ const maxFollowersNode = gData.nodes.reduce((a, b) =>
 // Set the max attribute of the input element to the maximum number of followers
 const maxFInputBox = document.getElementById("maxF-inputBox");
 maxFInputBox.max = maxFollowersNode.num_followers;
+maxFInputBox.value = maxFollowersNode.num_followers;
 
 // cross-link node objects
 gData.links.forEach((link) => {
