@@ -63,29 +63,21 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       return "green";
     } else if (node.party == "IYI" || node.party == "İYİ") {
       return "aqua";
-    }
-    else if (node.party == "DEVA") {
+    } else if (node.party == "DEVA") {
       return "dodgerblue";
-    }
-    else if (node.party == "SAADET") {
+    } else if (node.party == "SAADET") {
       return "indianred";
-    }
-    else if (node.party == "GELECEK") {
+    } else if (node.party == "GELECEK") {
       return "orange";
-    }
-    else if (node.party == "DP") {
+    } else if (node.party == "DP") {
       return "maroon";
-    }
-    else if (node.party == "TIP" || node.party == "TİP") {
+    } else if (node.party == "TIP" || node.party == "TİP") {
       return "darkred";
-    }
-    else if (node.party == "BBP") {
+    } else if (node.party == "BBP") {
       return "pink";
-    }
-    else if (node.party == "ZAFER") {
-        return "brown";
-    }
-    else {
+    } else if (node.party == "ZAFER") {
+      return "brown";
+    } else {
       return "gray";
     }
   })
@@ -100,10 +92,10 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     const newPos =
       node.x || node.y || node.z
         ? {
-          x: node.x * distRatio,
-          y: node.y * distRatio,
-          z: node.z * distRatio,
-        }
+            x: node.x * distRatio,
+            y: node.y * distRatio,
+            z: node.z * distRatio,
+          }
         : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
     Graph.cameraPosition(
@@ -192,8 +184,8 @@ function createFloatingBox(
   const imageUrl = Url !== "null" ? Url : "ppp.jpg";
 
   const node = document.createElement("div");
-node.classList.add("floating-box-two");
-node.innerHTML = `
+  node.classList.add("floating-box-two");
+  node.innerHTML = `
 <div class="card" style = "position: fixed;
 top: 10px;
 right: 10px;
@@ -202,26 +194,25 @@ padding: 20px;
 border-radius: 20px;
 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 width: 300px;
-height: 800px;
+height: 590px;
 display: flex;
 flex-direction: column;">
   <div class="card-body">
-    <h3 class="card-title">${name}</h3>
+    <h5 class="card-title">${name}</h5>
+    <p>${party}</p>
     <div class="info-background">
       <div class="info-container">
         <div class="followers-info">
-          <p class="takip">Parti : ${party}</p>
+          
           
         </div>
         <div class="followers-info">
-          <p class="takip" style = "font-size: 12px;
-          font-weight: lighter;
-          color: #555;">Takipçiler : ${num_followers}</p>
+          
           
         </div>
         <div class="party-info">
-          <p class="takip">Takip Edilenler</p>
-          <p class="yazi">${num_following}</p>
+          
+          
         </div>
       </div>
     </div>
@@ -239,23 +230,23 @@ flex-direction: column;">
 </div>
 `;
 
-// Calculate and update the card's height based on the timeline element's height
-window.addEventListener('DOMContentLoaded', () => {
-  const timelineContainer = document.getElementById('timelineContainer');
-  const timelineElement = timelineContainer.querySelector('.twitter-timeline');
-  timelineElement.addEventListener('load', () => {
-    const timelineHeight = timelineElement.offsetHeight;
-    const cardBody = timelineContainer.closest('.card-body');
-    const card = cardBody.closest('.card');
-    const currentCardHeight = card.offsetHeight;
-    const newCardHeight = currentCardHeight + timelineHeight;
-    card.style.height = `${newCardHeight}px`;
+  // Calculate and update the card's height based on the timeline element's height
+  window.addEventListener("DOMContentLoaded", () => {
+    const timelineContainer = document.getElementById("timelineContainer");
+    const timelineElement =
+      timelineContainer.querySelector(".twitter-timeline");
+    timelineElement.addEventListener("load", () => {
+      const timelineHeight = timelineElement.offsetHeight;
+      const cardBody = timelineContainer.closest(".card-body");
+      const card = cardBody.closest(".card");
+      const currentCardHeight = card.offsetHeight;
+      const newCardHeight = currentCardHeight + timelineHeight;
+      card.style.height = `${newCardHeight}px`;
+    });
   });
-});
-
 
   document.body.appendChild(node);
-  twttr.widgets.load()
+  twttr.widgets.load();
 
   const closeButton = node.querySelector(".close-button");
   closeButton.addEventListener("click", function () {
@@ -298,10 +289,10 @@ function searchNodes(searchInputVal, createPopUp) {
   const newPos =
     exactNode.x || exactNode.y || exactNode.z
       ? {
-        x: exactNode.x * distRatio,
-        y: exactNode.y * distRatio,
-        z: exactNode.z * distRatio,
-      }
+          x: exactNode.x * distRatio,
+          y: exactNode.y * distRatio,
+          z: exactNode.z * distRatio,
+        }
       : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
   Graph.cameraPosition(
@@ -372,7 +363,7 @@ SearchSubmitBtn.addEventListener("click", function (event) {
 
   let createPopUp = false;
 
-  const searchInputVal = document.getElementById("search-inputBox").value;
+  const searchInputVal = document.getElementById("user-select").value;
   const searchInputValPresent = gData.nodes.find(
     (n) => n.screen_name == searchInputVal
   );
