@@ -19,6 +19,15 @@ async function fetchJson() {
 var gData = await fetchJson();
 var filteredNodes = gData.nodes;
 
+
+const maxFollowersNode = gData.nodes.reduce((a, b) =>
+  a.num_followers > b.num_followers ? a : b
+);
+
+// Set the max attribute of the input element to the maximum number of followers
+const maxFInputBox = document.getElementById("maxF-inputBox");
+maxFInputBox.max = maxFollowersNode.num_followers;
+
 // cross-link node objects
 gData.links.forEach((link) => {
   const a = gData.nodes.find((node) => node.id === link.source);
@@ -92,10 +101,10 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     const newPos =
       node.x || node.y || node.z
         ? {
-            x: node.x * distRatio,
-            y: node.y * distRatio,
-            z: node.z * distRatio,
-          }
+          x: node.x * distRatio,
+          y: node.y * distRatio,
+          z: node.z * distRatio,
+        }
         : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
     Graph.cameraPosition(
@@ -186,48 +195,49 @@ function createFloatingBox(
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
   node.innerHTML = `
-<div class="card" style = "position: fixed;
-top: 10px;
-right: 10px;
-background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
-padding: 20px;
-border-radius: 20px;
-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-width: 300px;
-height: 590px;
-display: flex;
-flex-direction: column;">
-  <div class="card-body">
-    <h5 class="card-title">${name}</h5>
-    <p>${party}</p>
-    <div class="info-background">
-      <div class="info-container">
-        <div class="followers-info">
-          
-          
-        </div>
-        <div class="followers-info">
-          
-          
-        </div>
-        <div class="party-info">
-          
-          
-        </div>
-      </div>
-    </div>
-    <div id="timelineContainer">
-      <a class="twitter-timeline" data-width="300" data-height="420" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
-    </div>
-    <button class="btn btn-primary twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')">
-      Twitter'a Git
-    </button>
-    <button class="close-button">
-      <span>X</span>
-    </button>
-    
-  </div>
-</div>
+  <div class="card" style = "position: fixed;
+ top: 10px;
+ right: 10px;
+ background-image: linear-gradient(to bottom right, #ffffff, #ffffff);
+ padding: 0px;
+ border-radius: 20px;
+ box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ width: 350px;
+ height: 620px;
+ display: flex;
+ flex-direction: column;">
+ <div class="card-body">
+ <button type="button" class="btn-close rounded-circle close-button" aria-label="Close" style="float:right;"></button>
+ <h5 class="card-title">${name}</h5>
+ <p>${party}</p>
+ <button class="btn btn-primary twitter-btn" onclick="window.open('https://twitter.com/${screen_name}', '_blank')" style="width: 100%; margin-bottom: 8px;">
+ Twitter'a Git
+</button>
+
+ <div class="info-background">
+ <div class="info-container">
+ <div class="followers-info">
+ 
+ 
+ </div>
+ <div class="followers-info">
+ 
+ 
+ </div>
+ <div class="party-info">
+ 
+ 
+ </div>
+ </div>
+ </div>
+ <div id="timelineContainer">
+ <a class="twitter-timeline" data-width="450" data-height="450" href="https://twitter.com/${screen_name}">Tweets by ${screen_name}</a>
+ </div>
+ 
+ </div>
+ </div>
+
+  
 `;
 
   // Calculate and update the card's height based on the timeline element's height
@@ -289,10 +299,10 @@ function searchNodes(searchInputVal, createPopUp) {
   const newPos =
     exactNode.x || exactNode.y || exactNode.z
       ? {
-          x: exactNode.x * distRatio,
-          y: exactNode.y * distRatio,
-          z: exactNode.z * distRatio,
-        }
+        x: exactNode.x * distRatio,
+        y: exactNode.y * distRatio,
+        z: exactNode.z * distRatio,
+      }
       : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
   Graph.cameraPosition(
