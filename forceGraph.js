@@ -97,7 +97,7 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   )
   .onNodeClick((node) => {
     // Aim at node from outside it
-    const distance = 40;
+    const distance = 3500;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
 
     const newPos =
@@ -297,7 +297,7 @@ function createPopUpBox(textInput) {
 function searchNodes(searchInputVal, createPopUp) {
   let exactNode = gData.nodes.find((n) => n.name == searchInputVal);
 
-  const distance = 40;
+  const distance = 3500;
   const distRatio =
     1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
 
