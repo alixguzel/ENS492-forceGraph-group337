@@ -1,10 +1,16 @@
+// Description: This file contains the code for the 3D force graph.
+
+// This boolean variable is used to check if the nodes are filtered or not.
+// It is used to determine whether to reset the graph or not.
+// More details can be found in the resetGraph() function.
 let areNodesFiltered = false;
 
 const urlParams = new URLSearchParams(window.location.search);
 const dataParams = urlParams.get("data");
-console.log(dataParams);
-console.log(typeof dataParams);
 
+// This function is used for URL parameters and fetching the data from the JSON file.
+// If the URL data parameter is not specified, the default JSON file is used.
+// Otherwise, the JSON file specified in the URL is used.
 async function fetchJson() {
   if (dataParams == null) {
     let response = await fetch("./politicianNodes_S3DForce.json");
@@ -16,10 +22,12 @@ async function fetchJson() {
   return data;
 }
 
+// The data is fetched from the JSON file and saved in the gData variable.
+// A seperate variable is used to store the filtered nodes in case of filtering.
 var gData = await fetchJson();
 var filteredNodes = gData.nodes;
 
-
+// This is for determining the maximum number on the slider
 const maxFollowersNode = gData.nodes.reduce((a, b) =>
   a.num_followers > b.num_followers ? a : b
 );
@@ -29,7 +37,9 @@ const maxFInputBox = document.getElementById("maxF-inputBox");
 maxFInputBox.max = maxFollowersNode.num_followers;
 maxFInputBox.value = maxFollowersNode.num_followers;
 
-// cross-link node objects
+// Cross-link node objects
+// This is used for highlighting the nodes and links when the user hovers over them.
+// It is also used for the click event on the nodes.
 gData.links.forEach((link) => {
   const a = gData.nodes.find((node) => node.id === link.source);
   const b = gData.nodes.find((node) => node.id === link.target);
@@ -50,10 +60,15 @@ const highlightNodes_click = new Set();
 const highlightLinks_click = new Set();
 let hoverNode = null;
 
+// This is the main part of the graph.
+// It is used to create the graph and set the properties of the nodes and links.
+// It also contains the functions for the click and hover events.
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .graphData(gData)
   .nodeLabel("screen_name")
+  // nodeVal is used to determine the size of the nodes.
   .nodeVal((node) => node.num_followers/20)
+  // You can use the following line instead of the above line to use a logarithmic scale for the node sizes.
   //.nodeVal((node) => 5000 * Math.log10(node.num_followers))
   .nodeOpacity(1)
   .linkWidth((link) =>
@@ -63,6 +78,8 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     highlightLinks.has(link) || highlightLinks_click.has(link) ? 4 : 0
   )
   .linkDirectionalParticleWidth(4)
+  // nodeColor is used to determine the color of the nodes.
+  // The colors are determined according to the party of the politician.
   .nodeColor((node) => {
     if (node.party == "CHP") {
       return "red";
@@ -92,11 +109,14 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       return "gray";
     }
   })
+  // linkVisibility is used to determine the visibility of the links.
+  // The links are visible if the nodes are interacted
   .linkVisibility((link) =>
     highlightLinks.has(link) || highlightLinks_click.has(link) ? true : false
   )
   .onNodeClick((node) => {
     // Aim at node from outside it
+    // This is used to zoom in on the node when it is clicked.
     const distance = 3500;
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
 
@@ -114,6 +134,9 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       node, // lookAt ({ x, y, z })
       3000 // ms transition duration
     );
+    // This is used to create the floating box when the node is clicked.
+    // Floating box contains the information about the politician.
+    // It also contains the Twitter widget.
     createFloatingBox(
       node.name,
       node.screen_name,
@@ -122,12 +145,14 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       node.Url,
       node.num_following
     );
+    // This is used to highlight the nodes and links when the user clicks on them.
     clickHighlight(node);
   })
   .onNodeHover((node) => {
     // no state change
     if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
 
+    // This is used to highlight the nodes and links when the user hovers over them.
     highlightNodes.clear();
     highlightLinks.clear();
     if (node) {
@@ -153,6 +178,7 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
     updateHighlight();
   });
 
+// This is used to update highlight status
 function updateHighlight() {
   // trigger update of highlighted objects in scene
   Graph.nodeColor(Graph.nodeColor())
@@ -177,7 +203,9 @@ function updateHighlightClick() {
     .linkWidth(Graph.linkWidth())
     .linkDirectionalParticles(Graph.linkDirectionalParticles());
 }
-
+// This is used to create the floating box when the node is clicked.
+// Floating box contains the information about the politician.
+// It also contains the Twitter widget.
 function createFloatingBox(
   name,
   screen_name,
@@ -196,6 +224,7 @@ function createFloatingBox(
 
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
+  // This is the code for the floating box.
   node.innerHTML = `
   <div class="card" style = "position: fixed; top: 10px; right: 10px; background-image: linear-gradient(to bottom right, #ffffff, #ffffff); padding: 0px; border-radius: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width: 350px; height: 640px; display: flex; flex-direction: column;">
     <div class="card-body">
@@ -263,6 +292,7 @@ function createFloatingBox(
   document.body.appendChild(node);
   twttr.widgets.load();
 
+  // This is the code for the close button.
   const closeButton = node.querySelector(".close-button");
   closeButton.addEventListener("click", function () {
     node.remove();
@@ -271,6 +301,7 @@ function createFloatingBox(
   });
 }
 
+// This is used for creating the pop up box for notfications.
 function createPopUpBox(textInput) {
   var floatingPopUpBox = document.querySelector(".floating-box-popUp");
 
@@ -293,7 +324,8 @@ function createPopUpBox(textInput) {
   });
 }
 
-// Function to filter nodes based on the input value
+// This function is used to determine the position of the selected node.
+// It is used in the name selection bar.
 function searchNodes(searchInputVal, createPopUp) {
   let exactNode = gData.nodes.find((n) => n.name == searchInputVal);
 
@@ -315,6 +347,7 @@ function searchNodes(searchInputVal, createPopUp) {
     exactNode, // lookAt ({ x, y, z })
     3000 // ms transition duration
   );
+  // A floating box is created for the selected node.
   createFloatingBox(
     exactNode.name,
     exactNode.screen_name,
@@ -329,6 +362,7 @@ function searchNodes(searchInputVal, createPopUp) {
 }
 
 // Function to filter nodes based on the input value
+// You can apply multiple filters at the same time.
 function filterNodes(
   partyinputVal,
   minFinputVal,
