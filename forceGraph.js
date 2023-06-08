@@ -33,7 +33,7 @@ function borderPercentile(maxVal,data){
   console.log(data)
 
   // Calculate the index of the node representing the percentile
-  const index = parseInt(Math.floor(data.length * p) /100)
+  const index = parseInt(Math.floor(data.length * p) /100) - 1
 
   // Retrieve the node at the calculated index
   const percentileNode = data[index];
@@ -380,6 +380,7 @@ function filterNodes(
   party,
   minF,
 ) {
+  resetBtn.click();
   console.log(partyinputVal, minFinputVal, party, minF);
   console.log(typeof(party))
   let border;
@@ -393,9 +394,11 @@ function filterNodes(
     }
   }
   if (minF) {
+    if(minFinputVal != 100){
     filteredNodes = filteredNodes.filter(
       (n) => n.num_followers <= border.num_followers
     );
+    }
   }
 
 
