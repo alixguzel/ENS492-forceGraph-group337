@@ -17,6 +17,8 @@
 
 <body>
   <script>
+    // This script is used to load the Twitter widget asynchronously
+    // Twitter widget is used to display the tweet of the selected node on the profile card
     window.twttr = (function (d, s, id) {
       var js,
         fjs = d.getElementsByTagName(s)[0],
@@ -40,6 +42,7 @@
     <script src="forceGraph.js" type="module"></script>
   </div>
 
+  <!-- This div is for the Kişi Seçme box -->
   <div class="card fixed-top" style="
         left: 2%;
         top: 10%;
@@ -60,6 +63,7 @@
     </div>
   </div>
 
+  <!-- This div is for the Filtreleme box -->
   <div>
     <div class="card fixed-top" style="
           left: 2%;
@@ -113,10 +117,12 @@
     </div>
   </div>
   <script>
+    // This script is used for creating drop down list data
     window.onload = function () {
       fetch("./politicianNodes_S3DForce.json")
         .then((response) => response.json())
         .then((data) => {
+          // This one is for the user selection list data
           var select = document.getElementById("user-select");
           for (var i = 0; i < data.nodes.length; i++) {
             var opt = document.createElement("option");
@@ -127,7 +133,7 @@
               return a.name.localeCompare(b.name);
             });
           }
-
+          // This one is for the party selection list data
           var select = document.getElementById("party-inputBox");
           var unique = [...new Set(data.nodes.map(item => item.party))];
           unique.sort();
@@ -140,6 +146,7 @@
           return select;
         })
         .catch((error) => console.error("Error:", error));
+      // This script is used for getting the input from the sliders
       document.getElementById("minF-inputBox").oninput = function () {
         document.getElementById("minF-output").textContent = this.value;
       };
