@@ -381,13 +381,16 @@ function filterNodes(
   minF,
 ) {
   console.log(partyinputVal, minFinputVal, party, minF);
+  console.log(typeof(party))
   let border;
   if (minF){
     border = borderPercentile(minFinputVal,filteredNodes);
   }
 
   if (party) {
-    filteredNodes = filteredNodes.filter((n) => n.party == partyinputVal);
+    if (partyinputVal != "HEPSİ"){
+      filteredNodes = filteredNodes.filter((n) => n.party == partyinputVal);
+    }
   }
   if (minF) {
     filteredNodes = filteredNodes.filter(
