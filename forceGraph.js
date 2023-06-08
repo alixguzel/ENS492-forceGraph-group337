@@ -27,15 +27,25 @@ async function fetchJson() {
 var gData = await fetchJson();
 var filteredNodes = gData.nodes;
 
-// This is for determining the maximum number on the slider
-const maxFollowersNode = gData.nodes.reduce((a, b) =>
-  a.num_followers > b.num_followers ? a : b
-);
+function borderPercentile(maxVal,data){
+  let p = parseInt(maxVal);
+  data.sort((a, b) => a.num_followers - b.num_followers);
+  console.log(data)
 
-// Set the max attribute of the input element to the maximum number of followers
-const maxFInputBox = document.getElementById("maxF-inputBox");
-maxFInputBox.max = maxFollowersNode.num_followers;
-maxFInputBox.value = maxFollowersNode.num_followers;
+  // Calculate the index of the node representing the percentile
+  const index = parseInt(Math.floor(data.length * p) /100)
+
+  // Retrieve the node at the calculated index
+  const percentileNode = data[index];
+  console.log(percentileNode)
+
+  return percentileNode;
+}
+
+// This is for determining the maximum number on the slider
+
+
+
 
 // Cross-link node objects
 // This is used for highlighting the nodes and links when the user hovers over them.
@@ -366,26 +376,25 @@ function searchNodes(searchInputVal, createPopUp) {
 function filterNodes(
   partyinputVal,
   minFinputVal,
-  maxFinputVal,
+
   party,
   minF,
-  maxF
 ) {
-  console.log(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
+  console.log(partyinputVal, minFinputVal, party, minF);
+  let border;
+  if (minF){
+    border = borderPercentile(minFinputVal,filteredNodes);
+  }
 
   if (party) {
     filteredNodes = filteredNodes.filter((n) => n.party == partyinputVal);
   }
   if (minF) {
     filteredNodes = filteredNodes.filter(
-      (n) => n.num_followers > parseInt(minFinputVal)
+      (n) => n.num_followers <= border.num_followers
     );
   }
-  if (maxF) {
-    filteredNodes = filteredNodes.filter(
-      (n) => n.num_followers < parseInt(maxFinputVal)
-    );
-  }
+
 
   const filteredNodesIds = [];
 
@@ -443,12 +452,11 @@ submitBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
   let party,
-    minF,
-    maxF = false;
+    minF = false;
 
   const partyinputVal = document.getElementById("party-inputBox").value;
   const minFinputVal = document.getElementById("minF-inputBox").value;
-  const maxFinputVal = document.getElementById("maxF-inputBox").value;
+
 
   if (partyinputVal != "") {
     party = true;
@@ -456,11 +464,9 @@ submitBtn.addEventListener("click", function (event) {
   if (minFinputVal != "") {
     minF = true;
   }
-  if (maxFinputVal != "") {
-    maxF = true;
-  }
 
-  filterNodes(partyinputVal, minFinputVal, maxFinputVal, party, minF, maxF);
+
+  filterNodes(partyinputVal, minFinputVal,  party, minF);
 });
 
 // Event listener for removing the filters by clicking on the reset button
