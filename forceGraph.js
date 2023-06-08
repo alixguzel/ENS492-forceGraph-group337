@@ -11,6 +11,7 @@ async function fetchJson() {
     let data = await response.json();
     return data;
   }
+  
   let response = await fetch("./" + dataParams);
   let data = await response.json();
   return data;
