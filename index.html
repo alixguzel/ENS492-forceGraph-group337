@@ -87,7 +87,7 @@
             <div class="d-flex align-items-center">
               <input type="range" class="form-control-range w-100" id="minF-inputBox" name="inputBox" min="0"
                 max="100" value="100" />
-              <span id="minF-output">0</span>
+              <span id="minF-output">100</span>
             </div>
           </div>
           
@@ -112,11 +112,13 @@
   <script>
     // This script is used for creating drop down list data
     window.onload = function () {
+      var dataorg;
       fetch("./politicianNodes_S3DForce.json")
         .then((response) => response.json())
         .then((data) => {
           // This one is for the user selection list data
           var select = document.getElementById("user-select");
+          dataorg = data;
           for (var i = 0; i < data.nodes.length; i++) {
             var opt = document.createElement("option");
             opt.value = data.nodes[i].name;
@@ -124,18 +126,55 @@
             select.appendChild(opt);
             data.nodes.sort(function (a, b) {
               return a.name.localeCompare(b.name);
+
             });
+            
           }
           // This one is for the party selection list data
+          
+          
           var select = document.getElementById("party-inputBox");
-          var unique = [...new Set(data.nodes.map(item => item.party))];
+          var unique =  [...new Set(data.nodes.map(item => item.party))];
           unique.sort();
+          
+          node_arr = dataorg.nodes
+          
+          freqs = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+          
+          for(let i=0; i < node_arr.length; i++){
+            //let index = unique.findIndex(node_arr[i].party)
+            index = unique.indexOf(node_arr[i].party)
+            if(index != -1){
+              freqs[index] += 1
+            }
+            
+            
+          }
+          const sum = freqs.reduce((partialSum, a) => partialSum + a, 0);
+          to_pop = []
+          for(let i = 0; i < unique.length;i++){
+            freqs[i] = freqs[i]/sum;
+            if (freqs[i] < 0.05){
+              to_pop.push(unique[i])
+            }
+            
+
+          }
+          
+          let filtered_parties = unique.filter(n => !to_pop.includes(n))
+          
+          unique = filtered_parties
+
           for (var i = 0; i < unique.length; i++) {
+            if(unique[i] != "null"){
             var opt = document.createElement("option");
             opt.value = unique[i];
             opt.innerHTML = unique[i];
             select.appendChild(opt);
+            }
+            
           }
+        
           return select;
         })
         .catch((error) => console.error("Error:", error));
