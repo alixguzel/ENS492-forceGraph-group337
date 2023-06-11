@@ -5,6 +5,7 @@
 // More details can be found in the resetGraph() function.
 let areNodesFiltered = false;
 
+// Get the URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const dataParams = urlParams.get("data");
 
@@ -68,7 +69,9 @@ let hoverNode = null;
 // It is used to create the graph and set the properties of the nodes and links.
 // It also contains the functions for the click and hover events.
 const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
+  // This is used to set the data of the graph.
   .graphData(gData)
+  // This is used to set the text appearing on the nodes.
   .nodeLabel("screen_name")
   // nodeVal is used to determine the size of the nodes.
   .nodeVal((node) => node.num_followers/20)
@@ -78,6 +81,7 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
   .linkWidth((link) =>
     highlightLinks.has(link) || highlightLinks_click.has(link) ? 10 : 5
   )
+  // This is for the little particles on the links.
   .linkDirectionalParticles((link) =>
     highlightLinks.has(link) || highlightLinks_click.has(link) ? 4 : 0
   )
@@ -146,7 +150,6 @@ const Graph = ForceGraph3D()(document.getElementById("3d-graph"))
       node.screen_name,
       node.num_followers,
       node.party,
-      node.Url,
       node.num_following
     );
     // This is used to highlight the nodes and links when the user clicks on them.
@@ -215,16 +218,14 @@ function createFloatingBox(
   screen_name,
   num_followers,
   party,
-  Url,
   num_following
 ) {
   var floatingBox = document.querySelector(".floating-box-two");
 
+  // If there is already a floating box, remove it.
   if (floatingBox) {
     floatingBox.remove();
   }
-
-  const imageUrl = Url !== "null" ? Url : "ppp.jpg";
 
   const node = document.createElement("div");
   node.classList.add("floating-box-two");
@@ -273,9 +274,6 @@ function createFloatingBox(
         </div> 
     </div> 
 </div> 
-
-
-  
 `;
 
   // Calculate and update the card's height based on the timeline element's height
@@ -333,10 +331,13 @@ function createPopUpBox(textInput) {
 function searchNodes(searchInputVal, createPopUp) {
   let exactNode = gData.nodes.find((n) => n.name == searchInputVal);
 
+  // Camera position is changed to the selected node.
+  // The camera is moved to the selected node.
   const distance = 3500;
   const distRatio =
     1 + distance / Math.hypot(exactNode.x, exactNode.y, exactNode.z);
 
+  // Adjustments are made according to the x, y, z values of the selected node.
   const newPos =
     exactNode.x || exactNode.y || exactNode.z
       ? {
@@ -351,13 +352,14 @@ function searchNodes(searchInputVal, createPopUp) {
     exactNode, // lookAt ({ x, y, z })
     3000 // ms transition duration
   );
+
   // A floating box is created for the selected node.
+  // The floating box is the user info card
   createFloatingBox(
     exactNode.name,
     exactNode.screen_name,
     exactNode.num_followers,
     exactNode.party,
-    exactNode.Url,
     exactNode.num_following
   );
   if (createPopUp) {
@@ -430,6 +432,13 @@ SearchSubmitBtn.addEventListener("click", function (event) {
     (n) => n.name == searchInputVal
   );
 
+  // This part is for the older version of the website
+  // There used to be a search bar for the nodes, which than changed to dropdown list select.
+  // Code for the search bar is still present in the code, but it is not used.
+  // We are keeping it in case we need it in the future.
+  
+  // If the input value is not empty and the node is present in the graph, the node is searched.
+  // If the node is not present in the graph, a pop up box is created.
   if (searchInputVal != "" && searchInputValPresent != undefined) {
     if (areNodesFiltered) {
       const NodeAvailable = filteredNodes.find(
