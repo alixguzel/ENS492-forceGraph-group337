@@ -30,21 +30,15 @@ var filteredNodes = gData.nodes;
 function borderPercentile(maxVal,data){
   let p = parseInt(maxVal);
   data.sort((a, b) => a.num_followers - b.num_followers);
-  console.log(data)
 
   // Calculate the index of the node representing the percentile
   const index = parseInt(Math.floor(data.length * p) /100) - 1
 
   // Retrieve the node at the calculated index
   const percentileNode = data[index];
-  console.log(percentileNode)
 
   return percentileNode;
 }
-
-// This is for determining the maximum number on the slider
-
-
 
 
 // Cross-link node objects
@@ -380,9 +374,10 @@ function filterNodes(
   party,
   minF,
 ) {
+  // Filtered nodes array is resetted so that the filters can be applied again.
   resetBtn.click();
-  console.log(partyinputVal, minFinputVal, party, minF);
-  console.log(typeof(party))
+
+  // Code for filtering nodes percentage wise based on the percentage input value.
   let border;
   if (minF){
     border = borderPercentile(minFinputVal,filteredNodes);
@@ -396,31 +391,34 @@ function filterNodes(
   if (minF) {
     if(minFinputVal != 100){
     filteredNodes = filteredNodes.filter(
+      // Filtered nodes are the ones that have less (or equal) followers than the border node.
       (n) => n.num_followers <= border.num_followers
     );
     }
   }
 
-
   const filteredNodesIds = [];
 
+  // Filtered nodes' ids are added to an array
   filteredNodes.forEach((node) => {
     filteredNodesIds.push(node.id);
   });
 
+  // Filtered links are created based on the filtered nodes' ids.
   const filteredLinks = gData.links.filter(
     (e) =>
       filteredNodesIds.includes(e.source.id) &&
       filteredNodesIds.includes(e.target.id)
   );
-
+  
+  // Filtered data is created and applied to the graph.
   const filteredData = { nodes: filteredNodes, links: filteredLinks };
 
   areNodesFiltered = true;
   Graph.graphData(filteredData);
 }
 
-// Event listener for the filter input submit button
+// Event listener for the search input submit button
 const SearchSubmitBtn = document.getElementById("submit-search-btn");
 SearchSubmitBtn.addEventListener("click", function (event) {
   event.preventDefault();

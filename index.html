@@ -133,14 +133,14 @@
             
           }
           // This one is for the party selection list data
-          
-          
           var select = document.getElementById("party-inputBox");
           var unique =  [...new Set(data.nodes.map(item => item.party))];
           unique.sort();
           
           node_arr = dataorg.nodes
           
+          // Frequency of each party
+          // Update the frequency of each party in the list as you go through the nodes
           freqs = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
           
           for(let i=0; i < node_arr.length; i++){
@@ -149,9 +149,10 @@
             if(index != -1){
               freqs[index] += 1
             }
-            
-            
           }
+
+          // Check the frequency of each party and decide to have it in the list or not
+          // Parties with less than 5% of the total frequency will be removed
           const sum = freqs.reduce((partialSum, a) => partialSum + a, 0);
           to_pop = []
           for(let i = 0; i < unique.length;i++){
@@ -159,12 +160,13 @@
             if (freqs[i] < 0.05){
               to_pop.push(unique[i])
             }
-            
-
           }
           
           let filtered_parties = unique.filter(n => !to_pop.includes(n))
           
+          // Add the parties to the list
+          // Add the "HEPSİ" option to the beginning of the list
+          // Since the HEPSİ option is added to the beginning of the list, it will be selected by default
           unique = filtered_parties
           unique.unshift("HEPSİ")
 
@@ -176,9 +178,7 @@
             opt.innerHTML = unique[i];
             select.appendChild(opt);
             }
-            
           }
-        
           return select;
         })
         .catch((error) => console.error("Error:", error));
